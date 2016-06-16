@@ -1,13 +1,12 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class TouchInterface : MonoBehaviour
 {
 
 	public float touchShouldUpInDistance = 0.03f;
-	float _sqrTouchShouldUpInDistance;
-
 	public ParticleSystem touchCircle;
+
+	float sqrTouchShouldUpInDistance;
 
 	enum State
 	{
@@ -21,13 +20,18 @@ public class TouchInterface : MonoBehaviour
 	Vector3 startPosition;
 	Vector3 lastPosition;
 
+	OnTouchComplete onTouchComplete;
+
+	public void Subscribe(OnTouchComplete newDelegate)
+	{
+		onTouchComplete += newDelegate;
+	}
 
 	void Start()
 	{
-		_sqrTouchShouldUpInDistance = touchShouldUpInDistance * touchShouldUpInDistance;
-		Debug.Assert (touchCircle);
-//		touchCircle.Pause ();
-//		touchCircle.Clear ();
+		Debug.Assert (touchCircle != null);
+		touchCircle.Pause ();
+		sqrTouchShouldUpInDistance = touchShouldUpInDistance * touchShouldUpInDistance;
 	}
 
 	void Update()
@@ -48,12 +52,15 @@ public class TouchInterface : MonoBehaviour
 			Vector3 worldPosition = lastPosition;
 			worldPosition.z = -Camera.main.transform.position.z;
 			worldPosition = Camera.main.ScreenToWorldPoint (worldPosition);
-			Debug.Log ("world: " + worldPosition);
 			touchCircle.transform.position = worldPosition;
-//			touchCircle.time = 0f;
-			touchCircle.Emit (1);
+			touchCircle.time = 0f;
 			touchCircle.Play ();
-			Debug.Log ("particle system pos: " + touchCircle.transform.position);
+
+			if (onTouchComplete != null)
+			{
+				TouchCompleteArg arg = new TouchCompleteArg (worldPosition, Time.realtimeSinceStartup);
+				onTouchComplete (this, arg);
+			}
 		}
 	}
 
@@ -61,9 +68,6 @@ public class TouchInterface : MonoBehaviour
 	{
 		Debug.Assert (currentState == State.Floating);
 
-//		touchCircle.Pause ();
-//		touchCircle.Clear ();
-		
 		if (Input.touchCount == 0)
 		{
 			return;
@@ -105,11 +109,8 @@ public class TouchInterface : MonoBehaviour
 		}
 
 		Vector3 deltaPosition = Camera.main.ScreenToViewportPoint (lastPosition - startPosition);
-		Debug.Log ("last position: " + lastPosition);
-		Debug.Log ("start position: " + startPosition);
-		Debug.Log ("magnitude: " + deltaPosition.magnitude);
 
-		if (deltaPosition.sqrMagnitude < _sqrTouchShouldUpInDistance)
+		if (deltaPosition.sqrMagnitude < sqrTouchShouldUpInDistance)
 		{
 			currentState = State.Touched;
 		}

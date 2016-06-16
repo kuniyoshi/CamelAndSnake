@@ -45,8 +45,55 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\Title\Title.cs" />
+     <Compile Include="Assets\LowPolyUnityChan\Scripts\SpringBone.cs" />
+     <Compile Include="Assets\LowPolyUnityChan\Scripts\SpringCollider.cs" />
+     <Compile Include="Assets\LowPolyUnityChan\Scripts\SpringManager.cs" />
+     <Compile Include="Assets\Scripts\Configuration.cs" />
+     <Compile Include="Assets\Scripts\Devel\FrameMs.cs" />
+     <Compile Include="Assets\Scripts\OnTinyEvent.cs" />
+     <Compile Include="Assets\Scripts\OnTouchComplete.cs" />
+     <Compile Include="Assets\Scripts\OnValueChange.cs" />
+     <Compile Include="Assets\Scripts\Play\Test.cs" />
+     <Compile Include="Assets\Scripts\SceneStrider.cs" />
+     <Compile Include="Assets\Scripts\Settings\ConfigurationCamelType.cs" />
+     <Compile Include="Assets\Scripts\Settings\ConfigurationLetterCase.cs" />
+     <Compile Include="Assets\Scripts\Settings\GameController.cs" />
+     <Compile Include="Assets\Scripts\Settings\MyToggle.cs" />
+     <Compile Include="Assets\Scripts\Settings\StartButton.cs" />
+     <Compile Include="Assets\Scripts\Test\Util.cs" />
+     <Compile Include="Assets\Scripts\Title\DelegateChain.cs" />
+     <Compile Include="Assets\Scripts\Title\GameController.cs" />
+     <Compile Include="Assets\Scripts\Title\OnSceneChange.cs" />
+     <Compile Include="Assets\Scripts\Title\TheScene.cs" />
+     <Compile Include="Assets\Scripts\Title\TouchToStart.cs" />
+     <Compile Include="Assets\Scripts\TouchCompleteArg.cs" />
      <Compile Include="Assets\Scripts\TouchInterface.cs" />
+     <Compile Include="Assets\TestScripts\MyPub.cs" />
+     <Compile Include="Assets\TestScripts\MySub.cs" />
+     <Compile Include="Assets\TestScripts\OnFinish.cs" />
+     <Compile Include="Assets\UnityChan\Scripts\AutoBlink.cs" />
+     <Compile Include="Assets\UnityChan\Scripts\AutoBlinkforSD.cs" />
+     <Compile Include="Assets\UnityChan\Scripts\CameraController.cs" />
+     <Compile Include="Assets\UnityChan\Scripts\FaceUpdate.cs" />
+     <Compile Include="Assets\UnityChan\Scripts\IKCtrlRightHand.cs" />
+     <Compile Include="Assets\UnityChan\Scripts\IKLookAt.cs" />
+     <Compile Include="Assets\UnityChan\Scripts\IdleChanger.cs" />
+     <Compile Include="Assets\UnityChan\Scripts\RandomWind.cs" />
+     <Compile Include="Assets\UnityChan\Scripts\ThirdPersonCamera.cs" />
+     <Compile Include="Assets\UnityChan\Scripts\UnityChanControlScriptWithRgidBody.cs" />
+     <None Include="Assets\UnityChan\Models\UnityChanShader\Shader\Unitychan_chara_eye.shader" />
+     <None Include="Assets\UnityChan\Models\UnityChanShader\Shader\Unitychan_chara_fuku.shader" />
+     <None Include="Assets\README_SD_UnityChan.txt" />
+     <None Include="Assets\UnityChan\Models\UnityChanShader\Shader\readme.txt" />
+     <None Include="Assets\LowPolyUnityChan\README_LowPolyUnityChan.txt" />
+     <None Include="Assets\UnityChan\Models\UnityChanShader\Shader\Unitychan_chara_fuku_ds.shader" />
+     <None Include="Assets\UnityChan\Models\UnityChanShader\Shader\Unitychan_chara_eye_blend.shader" />
+     <None Include="Assets\UnityChan\Models\UnityChanShader\Shader\Unitychan_chara_hair_ds.shader" />
+     <None Include="Assets\UnityChan\Models\UnityChanShader\Shader\Unitychan_chara_akarami_blend.shader" />
+     <None Include="Assets\UnityChan\Models\UnityChanShader\Shader\Unitychan_chara_hair.shader" />
+     <None Include="Assets\UnityChan\Models\UnityChanShader\Shader\Unitychan_chara_eyelash_blend.shader" />
+     <None Include="Assets\UnityChan\Models\UnityChanShader\Shader\Unitychan_chara_hada.shader" />
+     <None Include="Assets\UnityChan\Models\UnityChanShader\Shader\Unitychan_chara_hada_blend.shader" />
  <Reference Include="UnityEngine.Networking">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
  </Reference>
