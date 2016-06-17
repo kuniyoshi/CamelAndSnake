@@ -86,11 +86,11 @@ public class WordAnimation : MonoBehaviour
 		Debug.Assert (bitPrefab);
 
 		Animator animator = bitPrefab.GetComponent<Animator> ();
-//		Debug.Assert (animator);
+		Debug.Assert (animator);
 		TheShowTrigger = Animator.StringToHash ("Show");
-//		Debug.Assert (Test.Util.HasAnimatorParameter (animator, TheShowTrigger));
+		Debug.Assert (Test.Util.HasAnimatorParameter (animator, TheShowTrigger));
 		TheHideTrigger = Animator.StringToHash ("Hide");
-//		Debug.Assert (Test.Util.HasAnimatorParameter (animator, TheHideTrigger));
+		Debug.Assert (Test.Util.HasAnimatorParameter (animator, TheHideTrigger));
 
 		textMesh = GetComponent<TextMesh> ();
 		Debug.Assert (textMesh);
