@@ -53,7 +53,10 @@
      <Compile Include="Assets\Scripts\OnTinyEvent.cs" />
      <Compile Include="Assets\Scripts\OnTouchComplete.cs" />
      <Compile Include="Assets\Scripts\OnValueChange.cs" />
+     <Compile Include="Assets\Scripts\Play\CubeBounds.cs" />
+     <Compile Include="Assets\Scripts\Play\GameController.cs" />
      <Compile Include="Assets\Scripts\Play\Test.cs" />
+     <Compile Include="Assets\Scripts\Play\WordAnimation.cs" />
      <Compile Include="Assets\Scripts\SceneStrider.cs" />
      <Compile Include="Assets\Scripts\Settings\ConfigurationCamelType.cs" />
      <Compile Include="Assets\Scripts\Settings\ConfigurationLetterCase.cs" />
