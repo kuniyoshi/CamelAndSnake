@@ -12,7 +12,7 @@ public class GameController : MonoBehaviour
 
 	WordAnimation wordAnimation;
 
-	void Start()
+	void Awake()
 	{
 		Debug.Assert (word);
 		wordAnimation = word.GetComponent<WordAnimation> ();
@@ -22,18 +22,39 @@ public class GameController : MonoBehaviour
 		clockPointer.Simulate (clockPointer.duration);
 	}
 
+	void Start()
+	{
+		wordAnimation.SetupBuffer (20);
+//		wordAnimation.Word = "helloWorld";
+	}
+
 	void Update()
 	{
+
 		if (Input.GetButtonDown("Fire1"))
 		{
-			Vector3 mousePosition = Input.mousePosition;
-			mousePosition.z = 20f - Camera.main.transform.position.z;
-			Vector3 worldPosition = Camera.main.ScreenToWorldPoint (mousePosition);
-			Debug.Log (worldPosition);
+			Vector3 point = SpecifyWorldPoint ();
+			wordAnimation.WarpTo (point);
+			Debug.Log (point);
+			wordAnimation.Word = "helloWorld";
+			wordAnimation.Show ();
+		}
 
-			clockPointer.transform.position = worldPosition;
-			Debug.Log ("time before play: " + clockPointer.time);
-			clockPointer.Play ();
+		if (Input.GetButtonDown("Fire2"))
+		{
+			wordAnimation.Hide ();
+		}
+
+		if (Input.GetButtonDown("Fire1"))
+		{
+//			Vector3 mousePosition = Input.mousePosition;
+//			mousePosition.z = 20f - Camera.main.transform.position.z;
+//			Vector3 worldPosition = Camera.main.ScreenToWorldPoint (mousePosition);
+//			Debug.Log (worldPosition);
+//
+//			clockPointer.transform.position = worldPosition;
+//			Debug.Log ("time before play: " + clockPointer.time);
+//			clockPointer.Play ();
 		}
 
 		if (Input.GetButtonDown("Fire2"))
@@ -42,7 +63,7 @@ public class GameController : MonoBehaviour
 //			clockPointer.Pause ();
 //			Debug.Log ("time: " + clockPointer.time);
 //			Debug.Log ("time: " + clockPointer.time);
-			clockPointer.Simulate (clockPointer.duration);
+//			clockPointer.Simulate (clockPointer.duration);
 //			clockPointer.Stop ();
 		}
 	}
@@ -50,7 +71,9 @@ public class GameController : MonoBehaviour
 	Vector3 SpecifyWorldPoint()
 	{
 		Vector3 mousePosition = Input.mousePosition;
-		mousePosition.z = word.GetZ ();
+		mousePosition.z = wordAnimation.Z - Camera.main.transform.position.z;
+		Vector3 worldPosition = Camera.main.ScreenToWorldPoint (mousePosition);
+		return worldPosition;
 	}
 
 }

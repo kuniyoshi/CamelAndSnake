@@ -6,7 +6,7 @@ namespace Test
 public class Util
 {
 
-	public static bool HasAnimatorParamter(Animator animator, string name)
+	public static bool HasAnimatorParameter(Animator animator, string name)
 	{
 		foreach (var paramter in animator.parameters)
 		{
@@ -19,7 +19,7 @@ public class Util
 		return false;
 	}
 
-	public static bool HasAnimatorParamter(Animator animator, int id)
+	public static bool HasAnimatorParameter(Animator animator, int id)
 	{
 		foreach (var paramter in animator.parameters)
 		{

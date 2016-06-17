@@ -44,9 +44,9 @@ public class MyToggle : MonoBehaviour
 		animator = GetComponent<Animator> ();
 		Debug.Assert (animator);
 		
-		Debug.Assert (Test.Util.HasAnimatorParamter (animator, TheBoolBool));
-		Debug.Assert (Test.Util.HasAnimatorParamter (animator, ThePressedTrigger));
-		Debug.Assert (Test.Util.HasAnimatorParamter (animator, TheNormalTrigger));
+		Debug.Assert (Test.Util.HasAnimatorParameter (animator, TheBoolBool));
+		Debug.Assert (Test.Util.HasAnimatorParameter (animator, ThePressedTrigger));
+		Debug.Assert (Test.Util.HasAnimatorParameter (animator, TheNormalTrigger));
 
 		toggle.onValueChanged.AddListener (SetBool);
 		toggle.onValueChanged.AddListener (FlashDeflation);

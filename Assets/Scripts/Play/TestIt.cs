@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Play
 {
 
-public class Test : MonoBehaviour
+public class TestIt : MonoBehaviour
 {
 
 	RectTransform rect;

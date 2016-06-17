@@ -31,7 +31,7 @@ public class TouchToStart : MonoBehaviour
 	void Start()
 	{
 		animator = GetComponentInParent<Animator> ();
-		Debug.Assert(animator != null && Test.Util.HasAnimatorParamter (animator, TriggerId));
+		Debug.Assert(animator != null && Test.Util.HasAnimatorParameter (animator, TriggerId));
 		Debug.Assert (animator != null && animator.HasState (0, TheLastState));
 	}
 

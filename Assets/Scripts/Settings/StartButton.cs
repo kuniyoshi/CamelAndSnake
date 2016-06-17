@@ -26,13 +26,13 @@ public class StartButton : MonoBehaviour
 		Debug.Assert (animator);
 
 		ThePushedTrigger = Animator.StringToHash ("Pressed");
-		Debug.Assert (Test.Util.HasAnimatorParamter (animator, ThePushedTrigger));
+		Debug.Assert (Test.Util.HasAnimatorParameter (animator, ThePushedTrigger));
 
 		TheReadyToNextState = Animator.StringToHash ("ReadyToNext");
 		Debug.Assert (animator.HasState (0, TheReadyToNextState));
 
 		TheNormalTrigger = Animator.StringToHash ("Normal");
-		Debug.Assert (Test.Util.HasAnimatorParamter (animator, TheNormalTrigger));
+		Debug.Assert (Test.Util.HasAnimatorParameter (animator, TheNormalTrigger));
 	}
 
 	void Update()
