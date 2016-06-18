@@ -15,9 +15,17 @@ public class Word : MonoBehaviour
 
 	public string Text { get { return animation.Text; } set { animation.Text = value; } }
 
+	public float Z { get { return animation.Z; } }
+
 	public void Hide() { animation.Hide(); }
 
 	public void Show() { animation.Show(); }
+
+	public void TextTo(string newValue, Vector3 newPoint)
+	{
+		WarpTo (newPoint);
+		Text = newValue;
+	}
 
 	public void WarpTo(Vector3 point) { animation.WarpTo(point); }
 

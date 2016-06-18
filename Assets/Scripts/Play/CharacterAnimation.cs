@@ -80,11 +80,7 @@ public class CharacterAnimation
 	{
 		Z = newPosition.z;
 		newPosition.z = 0f;
-		Debug.Log ("halfHeight: " + halfHeight);
-		Debug.Log ("magic delta: " + halfHeight * MagicDelta);
-		Debug.Log ("position: " + newPosition);
 		newPosition.y = newPosition.y + halfHeight + halfHeight * MagicDelta;
-		Debug.Log ("position: " + newPosition);
 		parentTransform.position = newPosition;
 	}
 
