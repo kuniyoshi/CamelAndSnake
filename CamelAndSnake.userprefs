@@ -1,9 +1,9 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Play/WordAnimation.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Play/GameController.cs">
     <Files>
-      <File FileName="Assets/Scripts/Play/WordAnimation.cs" Line="163" Column="68" />
-      <File FileName="Assets/Scripts/Play/GameController.cs" Line="38" Column="22" />
+      <File FileName="Assets/Scripts/Play/WordAnimation.cs" Line="96" Column="1" />
+      <File FileName="Assets/Scripts/Play/GameController.cs" Line="46" Column="50" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

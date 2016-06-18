@@ -18,6 +18,8 @@ public class WordAnimation : MonoBehaviour
 
 	static int TheShowTrigger;
 	static int TheHideTrigger;
+	static float MagicFactor = 0.1f;
+	static float MagicDelta = 12 * MagicFactor;
 
 	public GameObject bitPrefab;
 //	public float duration = 2f;
@@ -25,6 +27,7 @@ public class WordAnimation : MonoBehaviour
 	TextMesh textMesh;
 	string word_;
 	Child[] children;
+	float height;
 
 	public string Word
 	{
@@ -60,6 +63,8 @@ public class WordAnimation : MonoBehaviour
 		Debug.Assert (children == null);
 		children = new Child[size];
 
+		bool didAnimatorTest = false;
+
 		for (int i = 0; i < children.Length; i++)
 		{
 			GameObject anObject = Instantiate (bitPrefab);
@@ -71,6 +76,15 @@ public class WordAnimation : MonoBehaviour
 			children [i].transform = anObject.transform;
 			anObject.name = "bit." + i;
 			anObject.transform.parent = transform;
+
+			if (didAnimatorTest)
+			{
+				continue;
+			}
+
+			Debug.Assert (Test.Util.HasAnimatorParameter (children [i].animator, TheShowTrigger));
+			Debug.Assert (Test.Util.HasAnimatorParameter (children [i].animator, TheHideTrigger));
+			didAnimatorTest = true;
 		}
 	}
 
@@ -78,22 +92,28 @@ public class WordAnimation : MonoBehaviour
 	{
 		Z = newPosition.z;
 		newPosition.z = 0f;
+		newPosition.y = newPosition.y + height + MagicDelta;
 		transform.position = newPosition;
 	}
 
 	void Awake()
 	{
 		Debug.Assert (bitPrefab);
+	}
 
-		Animator animator = bitPrefab.GetComponent<Animator> ();
-		Debug.Assert (animator);
-		TheShowTrigger = Animator.StringToHash ("Show");
-		Debug.Assert (Test.Util.HasAnimatorParameter (animator, TheShowTrigger));
-		TheHideTrigger = Animator.StringToHash ("Hide");
-		Debug.Assert (Test.Util.HasAnimatorParameter (animator, TheHideTrigger));
-
+	void Start()
+	{
+		TheShowTrigger = Animator.StringToHash ("Show"); // test at SetupBuffer
+		TheHideTrigger = Animator.StringToHash ("Hide"); // test at SetupBuffer
 		textMesh = GetComponent<TextMesh> ();
 		Debug.Assert (textMesh);
+
+		CharacterInfo info;
+		string backupString = textMesh.text;
+		textMesh.text = "'Igjpqy";
+		textMesh.font.GetCharacterInfo ('I', out info, textMesh.font.fontSize, textMesh.fontStyle);
+		textMesh.text = backupString;
+		height = (info.maxY - info.minY) * MagicFactor * 0.5f;
 	}
 
 	void Update()
@@ -159,7 +179,7 @@ public class WordAnimation : MonoBehaviour
 	{
 		float offset = transform.position.x;
 
-		CharacterInfo info;
+		CharacterInfo info = new CharacterInfo ();
 		Vector3 childPosition = new Vector3 (0f, transform.position.y, 0f);
 		Font font = textMesh.font;
 		int fontSize = font.fontSize;
@@ -173,7 +193,7 @@ public class WordAnimation : MonoBehaviour
 			children [i].transform.position = childPosition;
 
 			font.GetCharacterInfo (word_ [i], out info, fontSize, fontStyle);
-			offset += info.advance * 0.1f;
+			offset += info.advance * MagicFactor;
 		}
 	}
 }

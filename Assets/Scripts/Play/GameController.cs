@@ -7,25 +7,28 @@ namespace Play
 public class GameController : MonoBehaviour
 {
 
-	public GameObject word;
 	public ParticleSystem clockPointer;
+	public GameObject wordObject;
+	public GameObject scoreObject;
 
 	WordAnimation wordAnimation;
+	RecognitionTime recognitionTime;
 
 	void Awake()
 	{
-		Debug.Assert (word);
-		wordAnimation = word.GetComponent<WordAnimation> ();
-		Debug.Assert (wordAnimation);
-
 		Debug.Assert (clockPointer);
 		clockPointer.Simulate (clockPointer.duration);
+		Debug.Assert (wordObject);
+		wordAnimation = wordObject.GetComponent<WordAnimation> ();
+		Debug.Assert (wordAnimation);
+		Debug.Assert (scoreObject);
+		recognitionTime = scoreObject.GetComponent<RecognitionTime> ();
+		Debug.Assert (recognitionTime);
 	}
 
 	void Start()
 	{
 		wordAnimation.SetupBuffer (20);
-//		wordAnimation.Word = "helloWorld";
 	}
 
 	void Update()
@@ -34,38 +37,30 @@ public class GameController : MonoBehaviour
 		if (Input.GetButtonDown("Fire1"))
 		{
 			Vector3 point = SpecifyWorldPoint ();
-			wordAnimation.WarpTo (point);
-			Debug.Log (point);
-			wordAnimation.Word = "helloWorld";
-			wordAnimation.Show ();
+			recognitionTime.WarpTo (point);
+			recognitionTime.Text = "012.3456789";
+			recognitionTime.Show ();
 		}
 
 		if (Input.GetButtonDown("Fire2"))
 		{
-			wordAnimation.Hide ();
+			recognitionTime.Hide ();
 		}
 
-		if (Input.GetButtonDown("Fire1"))
-		{
-//			Vector3 mousePosition = Input.mousePosition;
-//			mousePosition.z = 20f - Camera.main.transform.position.z;
-//			Vector3 worldPosition = Camera.main.ScreenToWorldPoint (mousePosition);
-//			Debug.Log (worldPosition);
+//		if (Input.GetButtonDown("Fire1"))
+//		{
+//			Vector3 point = SpecifyWorldPoint ();
+//			wordAnimation.WarpTo (point);
+//			wordAnimation.Word = "helloWorld";
+//			wordAnimation.Show ();
+//			recognizingTime = Time.time;
+//		}
 //
-//			clockPointer.transform.position = worldPosition;
-//			Debug.Log ("time before play: " + clockPointer.time);
-//			clockPointer.Play ();
-		}
-
-		if (Input.GetButtonDown("Fire2"))
-		{
-//			Debug.Log ("fire2");
-//			clockPointer.Pause ();
-//			Debug.Log ("time: " + clockPointer.time);
-//			Debug.Log ("time: " + clockPointer.time);
-//			clockPointer.Simulate (clockPointer.duration);
-//			clockPointer.Stop ();
-		}
+//		if (Input.GetButtonDown("Fire2"))
+//		{
+//			wordAnimation.Hide ();
+//			recognizingTime = recognizingTime - Time.time;
+//		}
 	}
 
 	Vector3 SpecifyWorldPoint()
