@@ -12,7 +12,7 @@ public class GameController : MonoBehaviour
 	public GameObject scoreObject;
 
 	WordAnimation wordAnimation;
-	RecognitionTime recognitionTime;
+	Word recognitionTime;
 
 	void Awake()
 	{
@@ -22,7 +22,7 @@ public class GameController : MonoBehaviour
 		wordAnimation = wordObject.GetComponent<WordAnimation> ();
 		Debug.Assert (wordAnimation);
 		Debug.Assert (scoreObject);
-		recognitionTime = scoreObject.GetComponent<RecognitionTime> ();
+		recognitionTime = scoreObject.GetComponent<Word> ();
 		Debug.Assert (recognitionTime);
 	}
 

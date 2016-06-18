@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Play
 {
 
-public class RecognitionTime : MonoBehaviour
+public class Word : MonoBehaviour
 {
 
 	static int BufferSize = 20;
