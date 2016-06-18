@@ -13,15 +13,26 @@ public class GameController : MonoBehaviour
 		Preparing,
 		Recognizing,
 		Scoring,
+		Notifying,
+	}
+
+	enum CharType
+	{
+		Undefined,
+		Camel,
+		Snake,
 	}
 
 	public ParticleSystem clockPointer;
 	public GameObject wordObject;
 	public GameObject scoreObject;
+	public Progress progress;
+	public Complete complete;
 
 	Word vocabulary;
 	Word recognitionTime;
 	State currentState;
+	CharType currentChar;
 	float score;
 
 	void Awake()
@@ -34,11 +45,16 @@ public class GameController : MonoBehaviour
 		Debug.Assert (scoreObject);
 		recognitionTime = scoreObject.GetComponent<Word> ();
 		Debug.Assert (recognitionTime);
+		Debug.Assert (progress);
+		Debug.Assert (complete);
 	}
 
 	void Start()
 	{
 		currentState = State.Floating;
+		progress.InitCamel (2);
+		progress.InitSnake (0);
+		currentChar = CharType.Undefined;
 	}
 
 	void Update()
@@ -58,8 +74,26 @@ public class GameController : MonoBehaviour
 		case State.Scoring:
 			UpdateScoring ();
 			break;
+		case State.Notifying:
+			UpdateNotifying ();
+			break;
 		}
 
+	}
+
+	void IncrementProgress()
+	{
+		Debug.Assert (currentChar != CharType.Undefined);
+
+		switch (currentChar)
+		{
+		case CharType.Camel:
+			progress.IncrementCamel ();
+			break;
+		case CharType.Snake:
+			progress.IncrementSnake ();
+			break;
+		}
 	}
 
 	void UpdateFloating()
@@ -69,6 +103,8 @@ public class GameController : MonoBehaviour
 			Vector3 point = SpecifyWorldPoint ();
 			vocabulary.TextTo ("helloWorld", point);
 			currentState = State.Preparing;
+
+			currentChar = CharType.Camel;
 		}
 	}
 
@@ -88,6 +124,9 @@ public class GameController : MonoBehaviour
 			point.z = vocabulary.Z;
 			recognitionTime.TextTo (score.ToString (), point);
 			currentState = State.Scoring;
+
+			IncrementProgress ();
+			currentChar = CharType.Undefined;
 		}
 	}
 
@@ -96,6 +135,22 @@ public class GameController : MonoBehaviour
 		vocabulary.Hide ();
 		recognitionTime.Show ();
 		currentState = State.Floating;
+
+		if (progress.DidComplete())
+		{
+			currentState = State.Notifying;
+		}
+	}
+
+	void UpdateNotifying()
+	{
+		// finish
+		complete.Animate ();
+
+		if (complete.DidComplete())
+		{
+//			Debug.Log ("FINISH");
+		}
 	}
 
 	Vector3 SpecifyWorldPoint()
