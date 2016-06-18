@@ -11,15 +11,15 @@ public class Word : MonoBehaviour
 
 	public GameObject prefab;
 
-	CharacterAnimation word;
+	CharacterAnimation animation;
 
-	public string Text { get { return word.Text; } set { word.Text = value; } }
+	public string Text { get { return animation.Text; } set { animation.Text = value; } }
 
-	public void Hide() { word.Hide(); }
+	public void Hide() { animation.Hide(); }
 
-	public void Show() { word.Show(); }
+	public void Show() { animation.Show(); }
 
-	public void WarpTo(Vector3 point) { word.WarpTo(point); }
+	public void WarpTo(Vector3 point) { animation.WarpTo(point); }
 
 	void Awake()
 	{
@@ -38,7 +38,7 @@ public class Word : MonoBehaviour
 		TextMesh mesh = GetComponent<TextMesh> ();
 		Debug.Assert (mesh);
 
-		word = new CharacterAnimation (transform, mesh, objects);
+		animation = new CharacterAnimation (transform, mesh, objects);
 	}
 
 }
