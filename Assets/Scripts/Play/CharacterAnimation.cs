@@ -42,6 +42,8 @@ public class CharacterAnimation
 	}
 
 	// property
+	public float HalfHeight { get { return halfHeight; } }
+
 	public string Text
 	{
 		get { return text_; }
@@ -109,9 +111,10 @@ public class CharacterAnimation
 		for (int i = 0; i < children.Length; i++)
 		{
 			GameObject child = objects [i];
-			children [i].animator = child.GetComponent<Animator> ();
+			children [i].animator = child.GetComponentInChildren<Animator> ();
+			children [i].animator.enabled = true;
 			Debug.Assert (children [i].animator);
-			children [i].textMesh = child.GetComponent<TextMesh> ();
+			children [i].textMesh = child.GetComponentInChildren<TextMesh> ();
 			Debug.Assert (children [i].textMesh);
 			children [i].textMesh.text = "";
 			children [i].transform = child.transform;

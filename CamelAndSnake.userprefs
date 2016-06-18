@@ -2,8 +2,9 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Play/GameController.cs">
     <Files>
-      <File FileName="Assets/Scripts/Play/WordAnimation.cs" Line="96" Column="1" />
-      <File FileName="Assets/Scripts/Play/GameController.cs" Line="46" Column="50" />
+      <File FileName="Assets/Scripts/Play/Word.cs" Line="25" Column="2" />
+      <File FileName="Assets/Scripts/Play/CharacterAnimation.cs" Line="113" Column="41" />
+      <File FileName="Assets/Scripts/Play/GameController.cs" Line="47" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
