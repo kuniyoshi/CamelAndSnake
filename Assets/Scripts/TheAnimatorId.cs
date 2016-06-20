@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using UnityEngine;
 
+// This file will be baked from ScriptTemplates.
+
 public class TheAnimatorId
 {
 
@@ -24,19 +26,19 @@ public class TheAnimatorId
 
 	TheAnimatorId() {} // hide from public
 
-	public int Show { get { return impl.Show; } }
 	public int Hide { get { return impl.Hide; } }
+	public int Show { get { return impl.Show; } }
 
 	partial class Impl
 	{
 
-		public int Show;
 		public int Hide;
+		public int Show;
 
 		public Impl()
 		{
-			Show = Animator.StringToHash("Show");
 			Hide = Animator.StringToHash("Hide");
+			Show = Animator.StringToHash("Show");
 		}
 
 	}
