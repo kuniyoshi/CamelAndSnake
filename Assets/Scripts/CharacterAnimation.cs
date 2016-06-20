@@ -36,7 +36,7 @@ public class CharacterAnimation
 		SetHalfHeight (mesh.text);
 	}
 
-	// property
+	// public property
 	public float HalfHeight { get { return halfHeight; } }
 
 	public string Text
@@ -51,26 +51,13 @@ public class CharacterAnimation
 
 	public float Z { get { return textMesh.offsetZ; } private set { textMesh.offsetZ = value; } }
 
-	// public member
-	public void Hide()
-	{
-		for (int i = 0; i < text_.Length; i++)
-		{
-			children [i].animator.SetTrigger (TheAnimatorId.Instance ().Hide);
-		}
-	}
+	// protected property
+	protected int Length { get { return text_.Length; } }
 
+	// public member
 	public void SetHalfHeight(string text)
 	{
 		halfHeight = GetHalfHeight (text);
-	}
-
-	public void Show()
-	{
-		for (int i = 0; i < text_.Length; i++)
-		{
-			children [i].animator.SetTrigger (TheAnimatorId.Instance ().Show);
-		}
 	}
 
 	public void WarpTo(Vector3 newPosition)
@@ -79,6 +66,18 @@ public class CharacterAnimation
 		newPosition.z = 0f;
 		newPosition.y = newPosition.y + halfHeight + halfHeight * MagicDelta;
 		parentTransform.position = newPosition;
+	}
+
+	// protected member
+	protected void SetTriggerTo(int trigger, int to)
+	{
+		Debug.Assert (to < text_.Length);
+		children [to].animator.SetTrigger (trigger);
+	}
+
+	protected bool TestAnimatorHasTrigger(int id)
+	{
+		return Test.Util.HasAnimatorParameter (children [0].animator, id);
 	}
 
 	// private member
@@ -101,8 +100,6 @@ public class CharacterAnimation
 		Debug.Assert (children == null);
 		children = new Child[objects.Length];
 
-		bool didTestTrigger = false;
-
 		for (int i = 0; i < children.Length; i++)
 		{
 			GameObject child = objects [i];
@@ -115,15 +112,6 @@ public class CharacterAnimation
 			children [i].transform = child.transform;
 			children [i].transform.parent = parentTransform;
 			child.name = "bit." + i;
-
-			if (!didTestTrigger)
-			{
-				Debug.Assert (Test.Util.HasAnimatorParameter (	children [i].animator,
-																TheAnimatorId.Instance ().Show));
-				Debug.Assert (Test.Util.HasAnimatorParameter (	children [i].animator,
-																TheAnimatorId.Instance ().Hide));
-				didTestTrigger = true;
-			}
 		}
 	}
 

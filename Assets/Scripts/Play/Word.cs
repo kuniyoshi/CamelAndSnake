@@ -19,9 +19,9 @@ public class Word : MonoBehaviour
 
 	public float Z { get { return bitAnimation.Z; } }
 
-	public void Hide() { bitAnimation.Hide(); }
+	public void Hide() { bitAnimation.HideAll(); }
 
-	public void Show() { bitAnimation.Show(); }
+	public void Show() { bitAnimation.ShowAll(); }
 
 	public void TextTo(string newText, Vector3 newPoint)
 	{
