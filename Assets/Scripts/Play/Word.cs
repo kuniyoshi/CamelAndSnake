@@ -13,8 +13,6 @@ public class Word : MonoBehaviour
 
 	WordAnimation bitAnimation;
 
-//	public float HalfHeight { get { return bitAnimation.HalfHeight; } }
-
 	public string Text { get { return bitAnimation.Text; } set { bitAnimation.Text = value; } }
 
 	public float Z { get { return bitAnimation.Z; } }
@@ -22,13 +20,11 @@ public class Word : MonoBehaviour
 	public void Hide()
 	{
 		StartCoroutine ("HideDelayed");
-//		bitAnimation.Hide();
 	}
 
 	public void Show()
 	{
 		StartCoroutine ("ShowDelayed");
-//		bitAnimation.ShowAll();
 	}
 
 	public void TextTo(string newText, Vector3 newPoint)
