@@ -1,9 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace Play
-{
-
 public class CharacterAnimation
 {
 
@@ -18,8 +15,6 @@ public class CharacterAnimation
 	}
 
 	static float MagicFactor = 0.1f;
-	static int TheShowTrigger = Animator.StringToHash ("Show");
-	static int TheHideTrigger = Animator.StringToHash ("Hide");
 	static float MagicDelta = 10f * MagicFactor;
 
 	// field
@@ -61,7 +56,7 @@ public class CharacterAnimation
 	{
 		for (int i = 0; i < text_.Length; i++)
 		{
-			children [i].animator.SetTrigger (TheHideTrigger);
+			children [i].animator.SetTrigger (TheAnimatorId.Instance ().Hide);
 		}
 	}
 
@@ -74,7 +69,7 @@ public class CharacterAnimation
 	{
 		for (int i = 0; i < text_.Length; i++)
 		{
-			children [i].animator.SetTrigger (TheShowTrigger);
+			children [i].animator.SetTrigger (TheAnimatorId.Instance ().Show);
 		}
 	}
 
@@ -123,8 +118,10 @@ public class CharacterAnimation
 
 			if (!didTestTrigger)
 			{
-				Debug.Assert (Test.Util.HasAnimatorParameter (children [i].animator, TheShowTrigger));
-				Debug.Assert (Test.Util.HasAnimatorParameter (children [i].animator, TheHideTrigger));
+				Debug.Assert (Test.Util.HasAnimatorParameter (	children [i].animator,
+																TheAnimatorId.Instance ().Show));
+				Debug.Assert (Test.Util.HasAnimatorParameter (	children [i].animator,
+																TheAnimatorId.Instance ().Hide));
 				didTestTrigger = true;
 			}
 		}
@@ -151,7 +148,5 @@ public class CharacterAnimation
 			offset += info.advance * MagicFactor;
 		}
 	}
-
-}
 
 }

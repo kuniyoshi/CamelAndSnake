@@ -48,12 +48,12 @@
      <Compile Include="Assets\LowPolyUnityChan\Scripts\SpringBone.cs" />
      <Compile Include="Assets\LowPolyUnityChan\Scripts\SpringCollider.cs" />
      <Compile Include="Assets\LowPolyUnityChan\Scripts\SpringManager.cs" />
+     <Compile Include="Assets\Scripts\CharacterAnimation.cs" />
      <Compile Include="Assets\Scripts\Configuration.cs" />
      <Compile Include="Assets\Scripts\Devel\FrameMs.cs" />
      <Compile Include="Assets\Scripts\OnTinyEvent.cs" />
      <Compile Include="Assets\Scripts\OnTouchComplete.cs" />
      <Compile Include="Assets\Scripts\OnValueChange.cs" />
-     <Compile Include="Assets\Scripts\Play\CharacterAnimation.cs" />
      <Compile Include="Assets\Scripts\Play\Complete.cs" />
      <Compile Include="Assets\Scripts\Play\CubeBounds.cs" />
      <Compile Include="Assets\Scripts\Play\Fraction.cs" />
@@ -62,6 +62,11 @@
      <Compile Include="Assets\Scripts\Play\TestIt.cs" />
      <Compile Include="Assets\Scripts\Play\Word.cs" />
      <Compile Include="Assets\Scripts\Play\WordAnimation.cs" />
+     <Compile Include="Assets\Scripts\Record.cs" />
+     <Compile Include="Assets\Scripts\Result\ClimbingUp.cs" />
+     <Compile Include="Assets\Scripts\Result\GameController.cs" />
+     <Compile Include="Assets\Scripts\Result\NumberFlash.cs" />
+     <Compile Include="Assets\Scripts\Result\Slide.cs" />
      <Compile Include="Assets\Scripts\SceneStrider.cs" />
      <Compile Include="Assets\Scripts\Settings\ConfigurationCamelType.cs" />
      <Compile Include="Assets\Scripts\Settings\ConfigurationLetterCase.cs" />
@@ -69,6 +74,7 @@
      <Compile Include="Assets\Scripts\Settings\MyToggle.cs" />
      <Compile Include="Assets\Scripts\Settings\StartButton.cs" />
      <Compile Include="Assets\Scripts\Test\Util.cs" />
+     <Compile Include="Assets\Scripts\TheAnimatorId.cs" />
      <Compile Include="Assets\Scripts\Title\DelegateChain.cs" />
      <Compile Include="Assets\Scripts\Title\GameController.cs" />
      <Compile Include="Assets\Scripts\Title\OnSceneChange.cs" />

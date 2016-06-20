@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Play
 {
-
+/*
 public class WordAnimation : MonoBehaviour
 {
 
@@ -197,5 +197,5 @@ public class WordAnimation : MonoBehaviour
 		}
 	}
 }
-
+*/
 }

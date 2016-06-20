@@ -34,9 +34,12 @@ public class GameController : MonoBehaviour
 	State currentState;
 	CharType currentChar;
 	float score;
+	Record record;
 
 	void Awake()
 	{
+		TheAnimatorId.Create ();
+
 		Debug.Assert (clockPointer);
 		clockPointer.Simulate (clockPointer.duration);
 		Debug.Assert (wordObject);
@@ -55,6 +58,7 @@ public class GameController : MonoBehaviour
 		progress.InitCamel (2);
 		progress.InitSnake (0);
 		currentChar = CharType.Undefined;
+		record = new Record ();
 	}
 
 	void Update()
@@ -79,6 +83,11 @@ public class GameController : MonoBehaviour
 			break;
 		}
 
+	}
+
+	void OnDestroy()
+	{
+		TheAnimatorId.Destroy ();
 	}
 
 	void IncrementProgress()
@@ -150,6 +159,13 @@ public class GameController : MonoBehaviour
 		if (complete.DidComplete())
 		{
 //			Debug.Log ("FINISH");
+			record.CamelCount = 60;
+			record.SnakeCount = 60;
+			record.CamelTotalTime = 22f;
+			record.SnakeTotalTime = 18f;
+			record.Save ();
+
+			UnityEngine.SceneManagement.SceneManager.LoadScene ("Result");
 		}
 	}
 
