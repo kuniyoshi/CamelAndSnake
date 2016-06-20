@@ -39,6 +39,8 @@ public class CharacterAnimation
 	// public property
 	public float HalfHeight { get { return halfHeight; } }
 
+	public int Length { get { return text_.Length; } }
+
 	public string Text
 	{
 		get { return text_; }
@@ -50,9 +52,6 @@ public class CharacterAnimation
 	}
 
 	public float Z { get { return textMesh.offsetZ; } private set { textMesh.offsetZ = value; } }
-
-	// protected property
-	protected int Length { get { return text_.Length; } }
 
 	// public member
 	public void SetHalfHeight(string text)
