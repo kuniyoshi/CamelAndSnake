@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-// This file will be baked from ScriptTemplates.
+// *****************************************************
+// *** This file will be baked from ScriptTemplates. ***
+// *****************************************************
 
 public class TheAnimatorId
 {

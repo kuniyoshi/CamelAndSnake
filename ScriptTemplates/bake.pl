@@ -11,7 +11,11 @@ use Path::Class qw( dir file );
 use Template;
 
 Readonly my $Bom16Be => "\x{feff}";
-Readonly my $NOTE => "This file will be baked from ScriptTemplates.";
+Readonly my $NOTE => <<END_NOTE;
+// *****************************************************
+// *** This file will be baked from ScriptTemplates. ***
+// *****************************************************
+END_NOTE
 
 our $dest;
 die usage( ) unless defined $dest;
@@ -48,7 +52,7 @@ sub bake {
     $tmpl->process( \$input, { }, \my $output )
         or die $tmpl->error;
 
-    $output =~ s{\n\n}{\n\n// $NOTE\n\n}msx;
+    $output =~ s{\n\n}{\n\n$NOTE\n}msx;
 #    $output = $Bom16Be . $output if $bom;
 
     my $target = $dir->file( $filename );
