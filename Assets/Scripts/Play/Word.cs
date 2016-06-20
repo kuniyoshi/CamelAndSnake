@@ -13,15 +13,23 @@ public class Word : MonoBehaviour
 
 	WordAnimation bitAnimation;
 
-	public float HalfHeight { get { return bitAnimation.HalfHeight; } }
+//	public float HalfHeight { get { return bitAnimation.HalfHeight; } }
 
 	public string Text { get { return bitAnimation.Text; } set { bitAnimation.Text = value; } }
 
 	public float Z { get { return bitAnimation.Z; } }
 
-	public void Hide() { bitAnimation.HideAll(); }
+	public void Hide()
+	{
+		StartCoroutine ("HideDelayed");
+//		bitAnimation.Hide();
+	}
 
-	public void Show() { bitAnimation.ShowAll(); }
+	public void Show()
+	{
+		StartCoroutine ("ShowDelayed");
+//		bitAnimation.ShowAll();
+	}
 
 	public void TextTo(string newText, Vector3 newPoint)
 	{
@@ -51,6 +59,23 @@ public class Word : MonoBehaviour
 		bitAnimation = new WordAnimation (transform, mesh, objects);
 	}
 
+	IEnumerator HideDelayed()
+	{
+		for (int i = 0; i < bitAnimation.Length; i++)
+		{
+			bitAnimation.HideAt (i);
+			yield return null;
+		}
+	}
+
+	IEnumerator ShowDelayed()
+	{
+		for (int i = 0; i < bitAnimation.Length; i++)
+		{
+			bitAnimation.ShowAt (i);
+			yield return null;
+		}
+	}
 }
 
 }

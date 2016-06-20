@@ -20,6 +20,8 @@ public class WordAnimation : CharacterAnimation
 		Debug.Assert (TestAnimatorHasTrigger (theShowTrigger));
 	}
 
+	public int Length { get { return base.Length; } }
+
 	public void HideAll()
 	{
 		for (int i = 0; i < Length; i++)
