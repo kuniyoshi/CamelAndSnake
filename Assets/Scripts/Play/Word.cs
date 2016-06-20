@@ -11,7 +11,7 @@ public class Word : MonoBehaviour
 
 	public GameObject prefab;
 
-	CharacterAnimation bitAnimation;
+	WordAnimation bitAnimation;
 
 	public float HalfHeight { get { return bitAnimation.HalfHeight; } }
 
@@ -48,7 +48,7 @@ public class Word : MonoBehaviour
 		TextMesh mesh = GetComponent<TextMesh> ();
 		Debug.Assert (mesh);
 
-		bitAnimation = new CharacterAnimation (transform, mesh, objects);
+		bitAnimation = new WordAnimation (transform, mesh, objects);
 	}
 
 }
