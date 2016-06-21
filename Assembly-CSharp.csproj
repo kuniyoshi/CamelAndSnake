@@ -82,6 +82,7 @@
      <Compile Include="Assets\Scripts\Title\TouchToStart.cs" />
      <Compile Include="Assets\Scripts\TouchCompleteArg.cs" />
      <Compile Include="Assets\Scripts\TouchInterface.cs" />
+     <Compile Include="Assets\Scripts\Toybox\CameraMover.cs" />
      <Compile Include="Assets\TestScripts\MyPub.cs" />
      <Compile Include="Assets\TestScripts\MySub.cs" />
      <Compile Include="Assets\TestScripts\OnFinish.cs" />
