@@ -21,7 +21,7 @@ public class NumberFlash : CharacterAnimation
 
 	public void StartScrolling(int to)
 	{
-		SetTriggerTo (to);
+//		SetTriggerTo (to);
 	}
 
 }

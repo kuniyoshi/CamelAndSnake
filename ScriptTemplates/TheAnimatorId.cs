@@ -3,6 +3,7 @@ using UnityEngine;
 
 [%- # CARE BOM EXISTENCE -%]
 [% SET keywords => [
+	"DidFix",
 	"Hide",
 	"Normal",
 	"Show",
@@ -19,7 +20,11 @@ public class TheAnimatorId
 
 	public static void Create()
 	{
-		Debug.Assert (impl == null);
+		if (impl != null)
+		{
+			return;
+		}
+
 		impl = new Impl();
 	}
 
@@ -30,6 +35,17 @@ public class TheAnimatorId
 	}
 
 	public static TheAnimatorId Instance() { return new TheAnimatorId(); }
+
+	public static TheAnimatorId Instance(bool createIfNeeded)
+	{
+		if (impl == null)
+		{
+			Create ();
+		}
+
+		return Instance ();
+	}
+
 
 	TheAnimatorId() {} // hide from public
 
