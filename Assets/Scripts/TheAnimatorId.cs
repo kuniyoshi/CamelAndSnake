@@ -29,18 +29,27 @@ public class TheAnimatorId
 	TheAnimatorId() {} // hide from public
 
 	public int Hide { get { return impl.Hide; } }
+	public int Normal { get { return impl.Normal; } }
 	public int Show { get { return impl.Show; } }
+	public int ShrinikDown { get { return impl.ShrinikDown; } }
+	public int ShrinikUp { get { return impl.ShrinikUp; } }
 
 	partial class Impl
 	{
 
 		public int Hide;
+		public int Normal;
 		public int Show;
+		public int ShrinikDown;
+		public int ShrinikUp;
 
 		public Impl()
 		{
 			Hide = Animator.StringToHash("Hide");
+			Normal = Animator.StringToHash("Normal");
 			Show = Animator.StringToHash("Show");
+			ShrinikDown = Animator.StringToHash("ShrinikDown");
+			ShrinikUp = Animator.StringToHash("ShrinikUp");
 		}
 
 	}

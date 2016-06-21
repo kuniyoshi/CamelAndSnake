@@ -63,9 +63,10 @@
      <Compile Include="Assets\Scripts\Play\Word.cs" />
      <Compile Include="Assets\Scripts\Play\WordAnimation.cs" />
      <Compile Include="Assets\Scripts\Record.cs" />
-     <Compile Include="Assets\Scripts\Result\ClimbingUp.cs" />
+     <Compile Include="Assets\Scripts\Result\DigitScroll.cs" />
      <Compile Include="Assets\Scripts\Result\GameController.cs" />
      <Compile Include="Assets\Scripts\Result\NumberFlash.cs" />
+     <Compile Include="Assets\Scripts\Result\PseudoDigitScroll.cs" />
      <Compile Include="Assets\Scripts\Result\Slide.cs" />
      <Compile Include="Assets\Scripts\SceneStrider.cs" />
      <Compile Include="Assets\Scripts\Settings\ConfigurationCamelType.cs" />

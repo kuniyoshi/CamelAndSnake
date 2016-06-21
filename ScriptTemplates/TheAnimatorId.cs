@@ -4,7 +4,10 @@ using UnityEngine;
 [%- # CARE BOM EXISTENCE -%]
 [% SET keywords => [
 	"Hide",
+	"Normal",
 	"Show",
+	"ShrinikDown",
+	"ShrinikUp",
 ] -%]
 
 public class TheAnimatorId
