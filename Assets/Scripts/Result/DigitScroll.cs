@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Result
 {
@@ -11,7 +12,7 @@ public class DigitScroll : MonoBehaviour
 
 	int currentDigit;
 	int lastDigit;
-	TextMesh mesh;
+	Text text;
 	Animator animator;
 	bool tryFix;
 	int passCount;
@@ -28,7 +29,7 @@ public class DigitScroll : MonoBehaviour
 	{
 		++currentDigit;
 		currentDigit = currentDigit % 10;
-		mesh.text = currentDigit.ToString ();
+		text.text = currentDigit.ToString ();
 
 		if (tryFix && currentDigit == lastDigit)
 		{
@@ -58,8 +59,8 @@ public class DigitScroll : MonoBehaviour
 		Debug.Assert (animator);
 		Debug.Assert (Test.Util.HasAnimatorParameter (animator, TheAnimatorId.Instance (true).DidFix));
 
-		mesh = GetComponent<TextMesh> ();
-		Debug.Assert (mesh);
+		text = GetComponent<Text> ();
+		Debug.Assert (text);
 
 		tryFix = false;
 	}

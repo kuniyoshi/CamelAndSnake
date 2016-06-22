@@ -64,10 +64,8 @@
      <Compile Include="Assets\Scripts\Play\WordAnimation.cs" />
      <Compile Include="Assets\Scripts\Record.cs" />
      <Compile Include="Assets\Scripts\Result\DigitScroll.cs" />
-     <Compile Include="Assets\Scripts\Result\DigitScroll2.cs" />
      <Compile Include="Assets\Scripts\Result\GameController.cs" />
      <Compile Include="Assets\Scripts\Result\NumberFlash.cs" />
-     <Compile Include="Assets\Scripts\Result\NumberFlash2.cs" />
      <Compile Include="Assets\Scripts\Result\PseudoDigitScroll.cs" />
      <Compile Include="Assets\Scripts\Result\Slide.cs" />
      <Compile Include="Assets\Scripts\SceneStrider.cs" />

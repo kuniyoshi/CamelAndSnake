@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Result
 {
@@ -8,12 +9,11 @@ public class NumberFlash : MonoBehaviour
 {
 
 	static float MagicScaleFactor = 0.1f;
-	static float MagicTuneFactor = 1.8f;
+	static float MagicTuneFactor = 0.1f;
 
 	public GameObject prefab;
 
-	TextMesh mesh;
-//	CharacterAnimation chars;
+	Text text;
 	GameObject[] objects;
 	bool didSetup;
 
@@ -24,10 +24,10 @@ public class NumberFlash : MonoBehaviour
 
 	void Start()
 	{
-		mesh = GetComponent<TextMesh> ();
-		Debug.Assert (mesh);
+		text = GetComponent<Text> ();
+		Debug.Assert (text);
 
-		objects = new GameObject[mesh.text.Length];
+		objects = new GameObject[text.text.Length];
 //		GameObject[] objects = new GameObject[mesh.text.Length];
 
 		for (int i = 0; i < objects.Length; i++)
@@ -45,15 +45,15 @@ public class NumberFlash : MonoBehaviour
 
 	float GetWidth()
 	{
-		string backup = mesh.text;
+		string backup = text.text;
 		float width = 0f;
 
-		mesh.text = "0123456789";
+		text.text = "0123456789";
 		CharacterInfo info;
 
-		for (int i = 0; i < mesh.text.Length; i++)
+		for (int i = 0; i < text.text.Length; i++)
 		{
-			mesh.font.GetCharacterInfo (mesh.text [i], out info, mesh.font.fontSize, mesh.fontStyle);
+			text.font.GetCharacterInfo (text.text [i], out info, text.font.fontSize, text.fontStyle);
 
 			float candidate = (float)info.advance + (float)info.bearing;
 
@@ -63,46 +63,26 @@ public class NumberFlash : MonoBehaviour
 			}
 		}
 
-		mesh.text = backup;
+		text.text = backup;
 
 		return width;
 	}
 
 	void InitChildren(GameObject[] objects)
 	{
-		float width = GetWidth () * mesh.font.fontSize * MagicScaleFactor;
-		Debug.Log ("width: " + width);
-		float offset = 0f;
-		Vector3 pos = transform.position;
-		Vector3 one = Vector3.one;
-		Vector3 zero = Vector3.zero;
-
-		Debug.Log ("p local scale: " + transform.localScale);
+		float width = GetWidth () * text.font.fontSize * MagicScaleFactor;
+		float offset = -width * (float)objects.Length * (0.5f + MagicTuneFactor);
+		Vector3 pos;
 
 		for (int i = 0; i < objects.Length; i++)
 		{
 			GameObject anObject = objects [i];
-			anObject.transform.SetParent (transform);
-			Debug.Log ("c local scale: " + anObject.transform.localScale);
-			Debug.Log ("c local position: " + anObject.transform.localPosition);
-			Debug.Log ("c position: " + anObject.transform.position);
-//			anObject.transform.localScale = one;
-//			anObject.transform.localPosition = zero;
+			anObject.transform.SetParent (transform, false);
 			anObject.name = "digit." + i.ToString ();
-
-//			Debug.Log ("p pos: " + transform.position);
-//			Debug.Log ("p local pos: " + transform.localPosition);
-//			pos = transform.position;
-//			pos.x = pos.x + offset;
-//			anObject.transform.position = pos;
-//			Debug.Log (pos);
-//			anObject.transform.localPosition = pos;
-//			anObject.transform.position = pos;
-
-//			Debug.Log ("c pos: " + anObject.transform.position);
-//			Debug.Log ("c local pos: " + anObject.transform.localPosition);
-
-			offset = offset + width;// * MagicTuneFactor;
+			pos = anObject.transform.localPosition;
+			pos.x = pos.x + offset;
+			anObject.transform.localPosition = pos;
+			offset = offset + 1.5f * width; // care char is centered
 		}
 	}
 
