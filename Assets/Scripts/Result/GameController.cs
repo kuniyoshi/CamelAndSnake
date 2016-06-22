@@ -8,30 +8,22 @@ namespace Result
 public class GameController : MonoBehaviour
 {
 
-	public DigitScroll digitScroll;
-
-	void OnEnabled()
-	{
-		TheAnimatorId.Create ();
-	}
+	public NumberFlash score;
 
 	void Awake()
 	{
-		Debug.Assert (digitScroll);
+		Debug.Assert (score);
 		TheAnimatorId.Create ();
 	}
 
 	void Start()
 	{
-		digitScroll.InitialDigit = Random.Range (0, 9);
 	}
 
 	void Update()
 	{
 		if (Input.GetButtonDown("Fire1"))
 		{
-			Debug.Log ("fire1");
-			digitScroll.Fix ();
 		}
 
 		if (Input.GetButtonDown("Fire2"))
