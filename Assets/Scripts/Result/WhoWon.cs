@@ -53,7 +53,6 @@ public class WhoWon : MonoBehaviour
 		switch (currentState)
 		{
 		case State.Hiding:
-			return;
 			break;
 		case State.Screwing:
 			if (whoWonAnimator.GetCurrentAnimatorStateInfo (0).shortNameHash == TheAnimatorId.Instance ().Complete)

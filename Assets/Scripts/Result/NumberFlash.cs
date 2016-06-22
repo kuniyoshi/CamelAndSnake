@@ -34,8 +34,6 @@ public class NumberFlash : MonoBehaviour
 	public void SetScore(int score)
 	{
 		string scoreText = score.ToString ();
-		Debug.Log ("score text len: " + scoreText.Length);
-		Debug.Log ("child len: " + children.Length);
 		Debug.Assert (scoreText.Length <= children.Length);
 
 		for (int i = 0; i < scoreText.Length; i++)
