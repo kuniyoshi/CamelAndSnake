@@ -3,12 +3,14 @@ using UnityEngine;
 
 [%- # CARE BOM EXISTENCE -%]
 [% SET keywords => [
+	"Complete",
 	"DidFix",
 	"Hide",
 	"Normal",
 	"Show",
 	"ShrinikDown",
 	"ShrinikUp",
+	"StartScrolling",
 ] -%]
 
 public class TheAnimatorId

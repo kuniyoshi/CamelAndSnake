@@ -12,10 +12,44 @@ public class NumberFlash : MonoBehaviour
 	static float MagicTuneFactor = 0.1f;
 
 	public GameObject prefab;
+	public float MaxDelayedSeconds = 1f;
 
 	Text text;
 	GameObject[] objects;
-	bool didSetup;
+	DigitScroll[] children;
+
+	public void SetScore(int score)
+	{
+		string scoreText = score.ToString ();
+		Debug.Assert (scoreText.Length <= children.Length);
+
+		for (int i = 0; i < scoreText.Length; i++)
+		{
+			int childIndex = children.Length - 1 - i;
+			int digit;
+			bool didSucceed = int.TryParse (scoreText [i].ToString (), out digit);
+			Debug.Assert (didSucceed);
+			children [childIndex].Setup (Random.Range(0, 9), digit);
+		}
+
+		for (int i = scoreText.Length; i < children.Length; i++)
+		{
+			children [i].Setup (0, 0);
+		}
+	}
+
+	public void StartScrolling()
+	{
+		StartCoroutine ("StartDelayedAnimation");
+	}
+
+	public void StopScrolling()
+	{
+		for (int i = 0; i < children.Length; i++)
+		{
+			children [i].Fix ();
+		}
+	}
 
 	void Awake()
 	{
@@ -28,15 +62,23 @@ public class NumberFlash : MonoBehaviour
 		Debug.Assert (text);
 
 		objects = new GameObject[text.text.Length];
-//		GameObject[] objects = new GameObject[mesh.text.Length];
 
 		for (int i = 0; i < objects.Length; i++)
 		{
 			objects [i] = Instantiate (prefab);
 		}
 
-//		chars = new CharacterAnimation (transform, mesh, objects);
 		InitChildren (objects);
+
+		children = new DigitScroll[objects.Length];
+
+		for (int i = 0; i < objects.Length; i++)
+		{
+			int index = objects.Length - 1 - i;
+			children [i] = objects [index].GetComponentInChildren<DigitScroll> ();
+			Debug.Assert (children [i]);
+		}
+
 	}
 
 	void Update()
@@ -83,6 +125,15 @@ public class NumberFlash : MonoBehaviour
 			pos.x = pos.x + offset;
 			anObject.transform.localPosition = pos;
 			offset = offset + 1.5f * width; // care char is centered
+		}
+	}
+
+	IEnumerator StartDelayedAnimation()
+	{
+		for (int i = 0; i < children.Length; i++)
+		{
+			children [i].StartScrolling ();
+			yield return new WaitForSeconds (Random.value * MaxDelayedSeconds);
 		}
 	}
 

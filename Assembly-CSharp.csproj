@@ -67,7 +67,9 @@
      <Compile Include="Assets\Scripts\Result\GameController.cs" />
      <Compile Include="Assets\Scripts\Result\NumberFlash.cs" />
      <Compile Include="Assets\Scripts\Result\PseudoDigitScroll.cs" />
+     <Compile Include="Assets\Scripts\Result\SearchLight.cs" />
      <Compile Include="Assets\Scripts\Result\Slide.cs" />
+     <Compile Include="Assets\Scripts\Result\WhoWon.cs" />
      <Compile Include="Assets\Scripts\SceneStrider.cs" />
      <Compile Include="Assets\Scripts\Settings\ConfigurationCamelType.cs" />
      <Compile Include="Assets\Scripts\Settings\ConfigurationLetterCase.cs" />

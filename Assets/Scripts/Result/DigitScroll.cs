@@ -11,13 +11,11 @@ public class DigitScroll : MonoBehaviour
 	static int MinCountToPass = 2;
 
 	int currentDigit;
-	int lastDigit;
+	int theFinalDigit;
 	Text text;
 	Animator animator;
 	bool tryFix;
 	int passCount;
-
-	public int InitialDigit { get; set; }
 
 	public void Fix()
 	{
@@ -31,7 +29,7 @@ public class DigitScroll : MonoBehaviour
 		currentDigit = currentDigit % 10;
 		text.text = currentDigit.ToString ();
 
-		if (tryFix && currentDigit == lastDigit)
+		if (tryFix && currentDigit == theFinalDigit)
 		{
 			++passCount;
 		}
@@ -47,10 +45,15 @@ public class DigitScroll : MonoBehaviour
 		return (MinCountToPass - passCount) == 1;
 	}
 
-	public void Setup(int first, int last)
+	public void StartScrolling()
+	{
+		animator.SetTrigger (TheAnimatorId.Instance ().StartScrolling);
+	}
+
+	public void Setup(int first, int final)
 	{
 		currentDigit = first;
-		lastDigit = last;
+		theFinalDigit = final;
 	}
 
 	void Start()
@@ -58,6 +61,7 @@ public class DigitScroll : MonoBehaviour
 		animator = GetComponent<Animator> ();
 		Debug.Assert (animator);
 		Debug.Assert (Test.Util.HasAnimatorParameter (animator, TheAnimatorId.Instance (true).DidFix));
+		Debug.Assert (Test.Util.HasAnimatorParameter (animator, TheAnimatorId.Instance ().StartScrolling));
 
 		text = GetComponent<Text> ();
 		Debug.Assert (text);

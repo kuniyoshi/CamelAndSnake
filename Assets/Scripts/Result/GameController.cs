@@ -9,10 +9,12 @@ public class GameController : MonoBehaviour
 {
 
 	public NumberFlash score;
+	public WhoWon whoWon;
 
 	void Awake()
 	{
 		Debug.Assert (score);
+		Debug.Assert (whoWon);
 		TheAnimatorId.Create ();
 	}
 
@@ -24,10 +26,18 @@ public class GameController : MonoBehaviour
 	{
 		if (Input.GetButtonDown("Fire1"))
 		{
+			score.SetScore (12345);
+			score.StartScrolling ();
 		}
 
 		if (Input.GetButtonDown("Fire2"))
 		{
+			score.StopScrolling ();
+		}
+
+		if (Input.GetButtonDown("Fire3"))
+		{
+			whoWon.Show ();
 		}
 	}
 
