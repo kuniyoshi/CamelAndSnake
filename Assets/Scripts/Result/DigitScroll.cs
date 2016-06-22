@@ -17,6 +17,11 @@ public class DigitScroll : MonoBehaviour
 	bool tryFix;
 	int passCount;
 
+	public bool DidComplete()
+	{
+		return animator.GetCurrentAnimatorStateInfo (0).shortNameHash == TheAnimatorId.Instance ().Complete;
+	}
+
 	public void Fix()
 	{
 		tryFix = true;
@@ -62,6 +67,7 @@ public class DigitScroll : MonoBehaviour
 		Debug.Assert (animator);
 		Debug.Assert (Test.Util.HasAnimatorParameter (animator, TheAnimatorId.Instance (true).DidFix));
 		Debug.Assert (Test.Util.HasAnimatorParameter (animator, TheAnimatorId.Instance ().StartScrolling));
+		Debug.Assert (animator.HasState (0, TheAnimatorId.Instance ().Complete));
 
 		text = GetComponent<Text> ();
 		Debug.Assert (text);

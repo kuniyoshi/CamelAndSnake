@@ -3,11 +3,13 @@ using UnityEngine;
 
 [%- # CARE BOM EXISTENCE -%]
 [% SET fields => [
-	{ type => "int", name => "CamelCount" },
-	{ type => "int", name => "CamelWordCount" },
+	{ type => "int", name => "CamelLetters" },
+	{ type => "int", name => "CamelWords" },
+	{ type => "int", name => "CamelPhrases" },
 	{ type => "float", name => "CamelTotalTime" },
-	{ type => "int", name => "SnakeCount" },
-	{ type => "int", name => "SnakeWordCount" },
+	{ type => "int", name => "SnakeLetters" },
+	{ type => "int", name => "SnakeWors" },
+	{ type => "int", name => "SnakePhrases" },
 	{ type => "float", name => "SnakeTotalTime" },
 ] -%]
 
@@ -20,6 +22,26 @@ public class Record
 
 	public [% GET field.type %] [% GET field.name %] { get; set; }
 [% END # FOREACH field IN fields -%]
+
+	public int CamelScore
+	{
+		get
+		{
+			float lettersPerSecond = (float)CamelLetters / CamelTotalTime;
+			float lettersPerMs = lettersPerSecond * 1000f;
+			return (int)(lettersPerMs + 0.5f);
+		}
+	}
+
+	public int SnakeScore
+	{
+		get
+		{
+			float lettersPerSecond = (float)SnakeLetters / SnakeTotalTime;
+			float lettersPerMs = lettersPerSecond * 1000f;
+			return (int)(lettersPerMs + 0.5f);
+		}
+	}
 
 	public void Save()
 	{

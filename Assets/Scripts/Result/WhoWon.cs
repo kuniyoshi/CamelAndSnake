@@ -11,14 +11,22 @@ public class WhoWon : MonoBehaviour
 	{
 		Hiding,
 		Screwing,
+		LightingBegin,
 		Lighting,
 		Completed,
 	}
 
+	public float LightingDuration = 3f;
 	public SearchLight searchLight;
 	public Animator whoWonAnimator;
 
 	State currentState;
+	float time;
+
+	public bool DidComplete()
+	{
+		return currentState == State.Completed;
+	}
 
 	public void Show()
 	{
@@ -50,11 +58,19 @@ public class WhoWon : MonoBehaviour
 		case State.Screwing:
 			if (whoWonAnimator.GetCurrentAnimatorStateInfo (0).shortNameHash == TheAnimatorId.Instance ().Complete)
 			{
-				currentState = State.Lighting;
+				currentState = State.LightingBegin;
 			}
 			break;
-		case State.Lighting:
+		case State.LightingBegin:
+			currentState = State.Lighting;
+			time = Time.time;
 			searchLight.Show ();
+			break;
+		case State.Lighting:
+			if (Time.time - time > LightingDuration)
+			{
+				currentState = State.Completed;
+			}
 			break;
 		case State.Completed:
 			break;

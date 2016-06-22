@@ -159,8 +159,12 @@ public class GameController : MonoBehaviour
 		if (complete.DidComplete())
 		{
 //			Debug.Log ("FINISH");
-			record.CamelCount = 60;
-			record.SnakeCount = 60;
+			record.CamelLetters = 60;
+			record.CamelWords = 60;
+			record.CamelPhrases = 60;
+			record.SnakeLetters = 60;
+			record.SnakeWors = 60;
+			record.SnakePhrases = 60;
 			record.CamelTotalTime = 22f;
 			record.SnakeTotalTime = 18f;
 			record.Save ();

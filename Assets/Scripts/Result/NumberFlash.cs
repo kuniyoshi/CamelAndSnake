@@ -18,9 +18,24 @@ public class NumberFlash : MonoBehaviour
 	GameObject[] objects;
 	DigitScroll[] children;
 
+	public bool DidComplete()
+	{
+		for (int i = 0; i < children.Length; i++)
+		{
+			if (!children [i].DidComplete ())
+			{
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 	public void SetScore(int score)
 	{
 		string scoreText = score.ToString ();
+		Debug.Log ("score text len: " + scoreText.Length);
+		Debug.Log ("child len: " + children.Length);
 		Debug.Assert (scoreText.Length <= children.Length);
 
 		for (int i = 0; i < scoreText.Length; i++)
