@@ -70,9 +70,9 @@ public class MyToggle : MonoBehaviour
 		}
 	}
 
-	void SetBool(bool newvValue)
+	void SetBool(bool newValue)
 	{
-		animator.SetBool (TheBoolBool, newvValue);
+		animator.SetBool (TheBoolBool, newValue);
 	}
 
 	void FlashDeflation(bool newValue)
