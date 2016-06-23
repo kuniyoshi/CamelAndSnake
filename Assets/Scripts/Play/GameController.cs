@@ -26,6 +26,8 @@ public class GameController : MonoBehaviour
 		Snake,
 	}
 
+	static float MagicTuneValue = 7.5f;
+
 	public SceneStrider configHolder;
 	public ParticleSystem clockPointer;
 	public Word phrase;
@@ -211,7 +213,14 @@ public class GameController : MonoBehaviour
 		if (Input.GetButtonDown("Fire1"))
 		{
 			currentState = State.Preparing;
+
 			Vector3 point = SpecifyWorldPoint ();
+
+			clockPointer.transform.position = point;
+			clockPointer.Play ();
+
+			point.x = point.x + MagicTuneValue;
+
 			currentChar = GetNextChar ();
 			phrase.TextTo (GetNextPhrase (), point);
 			ScoreThePhraseExpectTime ();
@@ -236,6 +245,9 @@ public class GameController : MonoBehaviour
 			recognitionTime.TextTo (score.ToString (), point);
 
 			IncrementProgress ();
+
+			clockPointer.Pause ();
+			clockPointer.Simulate (clockPointer.duration);
 		}
 	}
 
