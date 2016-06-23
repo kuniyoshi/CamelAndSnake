@@ -14,7 +14,9 @@ public class GameController : MonoBehaviour
 		Preparing,
 		Recognizing,
 		Scoring,
+		NotifyingBegin,
 		Notifying,
+		Completed,
 	}
 
 	enum CharType
@@ -24,15 +26,16 @@ public class GameController : MonoBehaviour
 		Snake,
 	}
 
+	public SceneStrider configHolder;
 	public ParticleSystem clockPointer;
-	public GameObject wordObject;
-	public GameObject scoreObject;
+	public Word phrase;
+	public Word recognitionTime;
 	public Progress progress;
 	public Complete complete;
 
-	Word vocabulary;
-	Word recognitionTime;
 	State currentState;
+	Configuration config;
+	Vocabulary vocabulary;
 	CharType currentChar;
 	float score;
 	Record record;
@@ -40,14 +43,11 @@ public class GameController : MonoBehaviour
 	void Awake()
 	{
 		TheAnimatorId.Create ();
+		Random.seed = (int)(Time.realtimeSinceStartup * 1000f);
 
+		Debug.Assert (configHolder);
 		Debug.Assert (clockPointer);
-		clockPointer.Simulate (clockPointer.duration);
-		Debug.Assert (wordObject);
-		vocabulary = wordObject.GetComponent<Word> ();
-		Debug.Assert (vocabulary);
-		Debug.Assert (scoreObject);
-		recognitionTime = scoreObject.GetComponent<Word> ();
+		Debug.Assert (phrase);
 		Debug.Assert (recognitionTime);
 		Debug.Assert (progress);
 		Debug.Assert (complete);
@@ -56,6 +56,10 @@ public class GameController : MonoBehaviour
 	void Start()
 	{
 		currentState = State.Setting;
+		clockPointer.Simulate (clockPointer.duration);
+		vocabulary = new Vocabulary ();
+		currentChar = CharType.Undefined;
+		record = new Record ();
 	}
 
 	void Update()
@@ -78,8 +82,14 @@ public class GameController : MonoBehaviour
 		case State.Scoring:
 			UpdateScoring ();
 			break;
+		case State.NotifyingBegin:
+			UpdateNotifyingBegin ();
+			break;
 		case State.Notifying:
 			UpdateNotifying ();
+			break;
+		case State.Completed:
+			UpdateCompleted ();
 			break;
 		}
 
@@ -88,6 +98,67 @@ public class GameController : MonoBehaviour
 	void OnDestroy()
 	{
 		TheAnimatorId.Destroy ();
+	}
+
+	CharType GetNextChar()
+	{
+		CharType nextChar = CharType.Undefined;
+
+		switch (config.order)
+		{
+		case Configuration.LetterCase.Camel:
+			nextChar = CharType.Camel;
+			break;
+		case Configuration.LetterCase.Snake:
+			nextChar = CharType.Snake;
+			break;
+		case Configuration.LetterCase.Shuffle:
+			if (progress.DidComplete())
+			{
+				; // do nothing
+			}
+			else if (progress.DidCamelComplete())
+			{
+				nextChar = CharType.Snake;
+			}
+			else if (progress.DidSnakeComplete())
+			{
+				nextChar = CharType.Camel;
+			}
+			else
+			{
+				int randValue = Random.Range (0, 2);
+				nextChar = randValue == 0 ? CharType.Camel : CharType.Snake;
+			}
+			break;
+		}
+
+		Debug.Assert (nextChar != CharType.Undefined);
+		return nextChar;
+	}
+
+	string GetNextPhrase()
+	{
+		if (currentChar == CharType.Snake)
+		{
+			return vocabulary.NextSnake ();
+		}
+
+		Debug.Assert (currentChar == CharType.Camel);
+
+		if (config.camelType == Configuration.CamelType.Camel)
+		{
+			return vocabulary.NextCamel ();
+		}
+		if (config.camelType == Configuration.CamelType.Pascal)
+		{
+			return vocabulary.NextPascal ();
+		}
+		else
+		{
+			int which = Random.Range (0, 2);
+			return which == 0 ? vocabulary.NextCamel () : vocabulary.NextPascal ();
+		}
 	}
 
 	void IncrementProgress()
@@ -107,84 +178,135 @@ public class GameController : MonoBehaviour
 
 	void UpdateSetting()
 	{
-		progress.InitCamel (2);
-		progress.InitSnake (0);
-		currentChar = CharType.Undefined;
-		record = new Record ();
+		currentState = State.Floating;
+		config = configHolder.Configuration;
+
+		if (!config.DidConfigure())
+		{
+			Debug.Log ("Could not stride configuration!  Use default value");
+			SetDefaultConfiguration ();
+		}
+
+		switch (config.order)
+		{
+		case Configuration.LetterCase.Camel:
+			progress.InitCamel (config.times);
+			progress.InitSnake (0);
+			break;
+		case Configuration.LetterCase.Snake:
+			progress.InitCamel (0);
+			progress.InitSnake (config.times);
+			break;
+		case Configuration.LetterCase.Shuffle:
+			progress.InitCamel (config.times);
+			progress.InitSnake (config.times);
+			break;
+		}
+
+		currentChar = GetNextChar ();
 	}
 
 	void UpdateFloating()
 	{
 		if (Input.GetButtonDown("Fire1"))
 		{
-			Vector3 point = SpecifyWorldPoint ();
-			vocabulary.TextTo ("helloWorld", point);
 			currentState = State.Preparing;
-
-			currentChar = CharType.Camel;
+			Vector3 point = SpecifyWorldPoint ();
+			currentChar = GetNextChar ();
+			phrase.TextTo (GetNextPhrase (), point);
+			ScoreThePhraseExpectTime ();
 		}
 	}
 
 	void UpdatePreparing()
 	{
-		vocabulary.Show ();
-		score = Time.time;
 		currentState = State.Recognizing;
+		phrase.Show ();
+		score = Time.time;
 	}
 
 	void UpdateRecognizing()
 	{
 		if (Input.GetButtonDown("Fire2"))
 		{
-			score = Time.time - score;
-			Vector3 point = vocabulary.transform.position;
-			point.z = vocabulary.Z;
-			recognitionTime.TextTo (score.ToString (), point);
 			currentState = State.Scoring;
+			score = Time.time - score;
+			Vector3 point = phrase.transform.position;
+			point.z = phrase.Z;
+			recognitionTime.TextTo (score.ToString (), point);
 
 			IncrementProgress ();
-			currentChar = CharType.Undefined;
 		}
 	}
 
 	void UpdateScoring()
 	{
-		vocabulary.Hide ();
+		currentState = progress.DidComplete() ? State.NotifyingBegin : State.Floating;
+		phrase.Hide ();
 		recognitionTime.Show ();
-		currentState = State.Floating;
+		ScoreThePhraseOnlyTime ();
+		currentChar = progress.DidComplete () ? CharType.Undefined : GetNextChar ();
+	}
 
-		if (progress.DidComplete())
-		{
-			currentState = State.Notifying;
-		}
+	void UpdateNotifyingBegin()
+	{
+		currentState = State.Notifying;
+		complete.Animate ();
 	}
 
 	void UpdateNotifying()
 	{
-		// finish
-		complete.Animate ();
-
 		if (complete.DidComplete())
 		{
-//			Debug.Log ("FINISH");
-			record.CamelLetters = 60;
-			record.CamelWords = 60;
-			record.CamelPhrases = 60;
-			record.SnakeLetters = 60;
-			record.SnakeWors = 60;
-			record.SnakePhrases = 60;
-			record.CamelTotalTime = 22f;
-			record.SnakeTotalTime = 18f;
-			record.Save ();
-
-			UnityEngine.SceneManagement.SceneManager.LoadScene ("Result");
+			currentState = State.Completed;
 		}
+	}
+
+	void UpdateCompleted()
+	{
+		Debug.Log (record);
+		record.Save ();
+		UnityEngine.SceneManagement.SceneManager.LoadScene ("Result");
+	}
+
+	void ScoreThePhraseExpectTime()
+	{
+		switch (currentChar)
+		{
+		case CharType.Camel:
+			record.IncrementCamel (vocabulary.CountOfCurrentWords, vocabulary.CountOfCurrentLetters);
+			break;
+		case CharType.Snake:
+			record.IncrementSnake (vocabulary.CountOfCurrentWords, vocabulary.CountOfCurrentLetters);
+			break;
+		}
+	}
+
+	void ScoreThePhraseOnlyTime()
+	{
+		switch (currentChar)
+		{
+		case CharType.Camel:
+			record.CamelTotalTime = record.CamelTotalTime + score;
+			break;
+		case CharType.Snake:
+			record.SnakeTotalTime = record.SnakeTotalTime + score;
+			break;
+		}
+	}
+
+	void SetDefaultConfiguration()
+	{
+		Debug.LogAssertion ("This Method is for Debug");
+		config.camelType = Configuration.CamelType.Mix;
+		config.order = Configuration.LetterCase.Snake;
+		config.times = 20;
 	}
 
 	Vector3 SpecifyWorldPoint()
 	{
 		Vector3 mousePosition = Input.mousePosition;
-		mousePosition.z = vocabulary.Z - Camera.main.transform.position.z;
+		mousePosition.z = phrase.Z - Camera.main.transform.position.z;
 		Vector3 worldPosition = Camera.main.ScreenToWorldPoint (mousePosition);
 		return worldPosition;
 	}

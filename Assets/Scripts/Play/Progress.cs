@@ -13,7 +13,11 @@ public class Progress : MonoBehaviour
 	Fraction camel;
 	Fraction snake;
 
+	public bool DidCamelComplete() { return camel.DidComplete(); }
+
 	public bool DidComplete() { return camel.DidComplete () && snake.DidComplete (); }
+
+	public bool DidSnakeComplete() { return snake.DidComplete(); }
 
 	public void IncrementCamel()
 	{

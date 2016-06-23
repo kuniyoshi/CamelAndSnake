@@ -7,7 +7,7 @@ namespace Play
 public class Word : MonoBehaviour
 {
 
-	static int BufferSize = 20;
+	static int BufferSize = 40;
 
 	public GameObject prefab;
 

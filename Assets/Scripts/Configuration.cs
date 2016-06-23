@@ -21,4 +21,6 @@ public struct Configuration
 	public LetterCase order;
 	public int times;
 
+	public bool DidConfigure() { return times != 0; }
+
 }

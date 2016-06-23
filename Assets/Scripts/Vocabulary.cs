@@ -6,12 +6,21 @@ public class Vocabulary
 {
 
 	string[] phrases;
+	string currentPhrase;
+	int countOfWords;
+	int countOfLetters;
 
 	public Vocabulary()
 	{
 		string filename = Application.dataPath + @"/data/phrases.txt";
 		phrases = File.ReadAllLines (filename);
 	}
+
+	public int CountOfCurrentLetters { get { return countOfLetters; } }
+
+	public int CountOfCurrentWords { get { return countOfWords; } }
+	
+	public string CurrentPhrase { get { return currentPhrase; } }
 
 	public string NextCamel()
 	{
@@ -25,7 +34,20 @@ public class Vocabulary
 
 	public string NextSnake()
 	{
-		return phrases [Random.Range (0, phrases.Length)];
+		currentPhrase = phrases [Random.Range (0, phrases.Length)];
+
+		countOfWords = 1;
+
+		for (int i = 0; i < currentPhrase.Length; i++)
+		{
+			if (currentPhrase[i] == '_')
+			{
+				++countOfWords;
+			}
+		}
+
+		countOfLetters = currentPhrase.Length;
+		return currentPhrase;
 	}
 
 	string Camelize(string snake, bool isPascal = false)

@@ -7,6 +7,8 @@ public class SceneStrider : MonoBehaviour
 	Configuration config;
 	bool isStriding;
 
+	public Configuration Configuration { get { return config; } }
+
 	public void StartStriding(Configuration newConfig)
 	{
 		config = newConfig;
