@@ -104,22 +104,19 @@ public class GameController : MonoBehaviour
 
 	CharType GetNextChar()
 	{
+		Debug.Assert (!progress.DidComplete ());
 		CharType nextChar = CharType.Undefined;
 
 		switch (config.order)
 		{
 		case Configuration.LetterCase.Camel:
-			nextChar = CharType.Camel;
+			nextChar = !progress.DidCamelComplete () ? CharType.Camel : CharType.Snake;
 			break;
 		case Configuration.LetterCase.Snake:
-			nextChar = CharType.Snake;
+			nextChar = !progress.DidSnakeComplete () ? CharType.Snake : CharType.Camel;
 			break;
 		case Configuration.LetterCase.Shuffle:
-			if (progress.DidComplete())
-			{
-				; // do nothing
-			}
-			else if (progress.DidCamelComplete())
+			if (progress.DidCamelComplete())
 			{
 				nextChar = CharType.Snake;
 			}
@@ -129,8 +126,8 @@ public class GameController : MonoBehaviour
 			}
 			else
 			{
-				int randValue = Random.Range (0, 2);
-				nextChar = randValue == 0 ? CharType.Camel : CharType.Snake;
+				int which = Random.Range (0, 2);
+				nextChar = which == 0 ? CharType.Camel : CharType.Snake;
 			}
 			break;
 		}
@@ -189,21 +186,7 @@ public class GameController : MonoBehaviour
 			SetDefaultConfiguration ();
 		}
 
-		switch (config.order)
-		{
-		case Configuration.LetterCase.Camel:
-			progress.InitCamel (config.times);
-			progress.InitSnake (0);
-			break;
-		case Configuration.LetterCase.Snake:
-			progress.InitCamel (0);
-			progress.InitSnake (config.times);
-			break;
-		case Configuration.LetterCase.Shuffle:
-			progress.InitCamel (config.times);
-			progress.InitSnake (config.times);
-			break;
-		}
+		progress.InitCount (config.times);
 
 		currentChar = GetNextChar ();
 	}

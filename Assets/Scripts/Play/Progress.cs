@@ -29,13 +29,9 @@ public class Progress : MonoBehaviour
 		snake.Increment ();
 	}
 
-	public void InitCamel(int count)
+	public void InitCount(int count)
 	{
 		camel.Init (count);
-	}
-
-	public void InitSnake(int count)
-	{
 		snake.Init (count);
 	}
 
