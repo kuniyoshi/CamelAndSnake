@@ -9,6 +9,7 @@ public class GameController : MonoBehaviour
 
 	enum State
 	{
+		Setting,
 		Floating,
 		Preparing,
 		Recognizing,
@@ -54,11 +55,7 @@ public class GameController : MonoBehaviour
 
 	void Start()
 	{
-		currentState = State.Floating;
-		progress.InitCamel (2);
-		progress.InitSnake (0);
-		currentChar = CharType.Undefined;
-		record = new Record ();
+		currentState = State.Setting;
 	}
 
 	void Update()
@@ -66,6 +63,9 @@ public class GameController : MonoBehaviour
 
 		switch (currentState)
 		{
+		case State.Setting:
+			UpdateSetting ();
+			break;
 		case State.Floating:
 			UpdateFloating ();
 			break;
@@ -103,6 +103,14 @@ public class GameController : MonoBehaviour
 			progress.IncrementSnake ();
 			break;
 		}
+	}
+
+	void UpdateSetting()
+	{
+		progress.InitCamel (2);
+		progress.InitSnake (0);
+		currentChar = CharType.Undefined;
+		record = new Record ();
 	}
 
 	void UpdateFloating()
