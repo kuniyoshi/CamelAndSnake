@@ -55,11 +55,9 @@
      <Compile Include="Assets\Scripts\OnTouchComplete.cs" />
      <Compile Include="Assets\Scripts\OnValueChange.cs" />
      <Compile Include="Assets\Scripts\Play\Complete.cs" />
-     <Compile Include="Assets\Scripts\Play\CubeBounds.cs" />
      <Compile Include="Assets\Scripts\Play\Fraction.cs" />
      <Compile Include="Assets\Scripts\Play\GameController.cs" />
      <Compile Include="Assets\Scripts\Play\Progress.cs" />
-     <Compile Include="Assets\Scripts\Play\TestIt.cs" />
      <Compile Include="Assets\Scripts\Play\Word.cs" />
      <Compile Include="Assets\Scripts\Play\WordAnimation.cs" />
      <Compile Include="Assets\Scripts\Record.cs" />
