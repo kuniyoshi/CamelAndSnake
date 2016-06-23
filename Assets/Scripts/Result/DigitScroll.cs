@@ -52,6 +52,8 @@ public class DigitScroll : MonoBehaviour
 
 	public void StartScrolling()
 	{
+		Debug.Assert (animator);
+		Debug.Assert (TheAnimatorId.Instance () != null);
 		animator.SetTrigger (TheAnimatorId.Instance ().StartScrolling);
 	}
 

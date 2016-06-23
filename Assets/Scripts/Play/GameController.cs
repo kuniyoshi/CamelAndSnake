@@ -312,7 +312,7 @@ public class GameController : MonoBehaviour
 		Debug.LogAssertion ("This Method is for Debug");
 		config.camelType = Configuration.CamelType.Mix;
 		config.order = Configuration.LetterCase.Shuffle;
-		config.times = 10;
+		config.times = 1;
 	}
 
 	Vector3 SpecifyWorldPoint()

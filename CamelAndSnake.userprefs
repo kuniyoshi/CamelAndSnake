@@ -1,13 +1,15 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Result/NumberFlash.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Result/GameController.cs">
     <Files>
-      <File FileName="Assets/Scripts/Result/GameController.cs" Line="57" Column="4" />
-      <File FileName="Assets/Scripts/Result/DigitScroll.cs" Line="56" Column="24" />
-      <File FileName="Assets/Scripts/Result/NumberFlash.cs" Line="50" Column="24" />
-      <File FileName="Assets/Scripts/Result/SearchLight.cs" Line="84" Column="43" />
-      <File FileName="Assets/Scripts/Result/WhoWon.cs" Line="49" Column="1" />
-      <File FileName="Assets/Scripts/Record.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Vocabulary.cs" Line="41" Column="43" />
+      <File FileName="Assets/Scripts/Play/GameController.cs" Line="315" Column="19" />
+      <File FileName="Assets/Scripts/Play/Word.cs" Line="10" Column="28" />
+      <File FileName="Assets/Scripts/Play/WordAnimation.cs" Line="23" Column="1" />
+      <File FileName="Assets/Scripts/Play/Progress.cs" Line="45" Column="1" />
+      <File FileName="Assets/Scripts/CharacterAnimation.cs" Line="30" Column="7" />
+      <File FileName="Assets/Scripts/Result/DigitScroll.cs" Line="56" Column="50" />
+      <File FileName="Assets/Scripts/Result/GameController.cs" Line="65" Column="19" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

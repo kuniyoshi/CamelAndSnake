@@ -39,10 +39,6 @@ public class GameController : MonoBehaviour
 	{
 		record = new Record ();
 		record.Load ();
-
-		record.CamelLetters = 30;
-		record.SnakeLetters = 30;
-
 		currentState = State.Initial;
 	}
 
@@ -87,22 +83,6 @@ public class GameController : MonoBehaviour
 //			Debug.Log ("change the scene to the title");
 			break;
 		}
-
-//		if (Input.GetButtonDown("Fire1"))
-//		{
-//			score.SetScore (12345);
-//			score.StartScrolling ();
-//		}
-//
-//		if (Input.GetButtonDown("Fire2"))
-//		{
-//			score.StopScrolling ();
-//		}
-//
-//		if (Input.GetButtonDown("Fire3"))
-//		{
-//			whoWon.Show ();
-//		}
 	}
 
 	void OnDestroy()
