@@ -77,6 +77,7 @@
      <Compile Include="Assets\Scripts\Settings\MyToggle.cs" />
      <Compile Include="Assets\Scripts\Settings\StartButton.cs" />
      <Compile Include="Assets\Scripts\Test\Util.cs" />
+     <Compile Include="Assets\Scripts\TestText\GameController.cs" />
      <Compile Include="Assets\Scripts\TheAnimatorId.cs" />
      <Compile Include="Assets\Scripts\Title\DelegateChain.cs" />
      <Compile Include="Assets\Scripts\Title\GameController.cs" />
@@ -86,6 +87,7 @@
      <Compile Include="Assets\Scripts\TouchCompleteArg.cs" />
      <Compile Include="Assets\Scripts\TouchInterface.cs" />
      <Compile Include="Assets\Scripts\Toybox\CameraMover.cs" />
+     <Compile Include="Assets\Scripts\Vocabulary.cs" />
      <Compile Include="Assets\TestScripts\MyPub.cs" />
      <Compile Include="Assets\TestScripts\MySub.cs" />
      <Compile Include="Assets\TestScripts\OnFinish.cs" />
@@ -101,6 +103,7 @@
      <Compile Include="Assets\UnityChan\Scripts\UnityChanControlScriptWithRgidBody.cs" />
      <None Include="Assets\UnityChan\Models\UnityChanShader\Shader\Unitychan_chara_eye.shader" />
      <None Include="Assets\UnityChan\Models\UnityChanShader\Shader\Unitychan_chara_fuku.shader" />
+     <None Include="Assets\Data\phrases.txt" />
      <None Include="Assets\README_SD_UnityChan.txt" />
      <None Include="Assets\UnityChan\Models\UnityChanShader\Shader\readme.txt" />
      <None Include="Assets\LowPolyUnityChan\README_LowPolyUnityChan.txt" />
