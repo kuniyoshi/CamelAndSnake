@@ -8,6 +8,12 @@ namespace Settings
 public class GameController : MonoBehaviour
 {
 
+	enum State
+	{
+		Initializing,
+		Configuring,
+	}
+
 	readonly int[] Times = { 10, 20, 30, 40, 50 };
 
 	public TouchInterface touchInterface;
@@ -16,6 +22,7 @@ public class GameController : MonoBehaviour
 	public StartButton startButton;
 	public SceneStrider sceneStrider;
 
+	State currentState;
 	Configuration config;
 
 	public void TrackTimes(float sliderValue)
@@ -44,32 +51,39 @@ public class GameController : MonoBehaviour
 
 	void Start()
 	{
-		for (int i = 0; i < camelizationToggles.Length; i++)
-		{
-			TrackCamelType (camelizationToggles [i]);
-		}
-
-		for (int i = 0; i < orderToggles.Length; i++)
-		{
-			TrackLetterCase (orderToggles [i]);
-		}
-
+		currentState = State.Initializing;
 		config.times = Times [0];
-
-		startButton.Subscribe (delegate() {
-			sceneStrider.StartStriding(config);
-			UnityEngine.SceneManagement.SceneManager.LoadScene("Play");
-		});
 	}
 
 	void Update()
 	{
-//		if (Input.GetButtonDown("Fire1"))
-//		{
-//			Debug.Log ("camel type: " + config.camelType);
-//			Debug.Log ("order: " + config.order);
-//			Debug.Log ("times: " + config.times);
-//		}
+		switch (currentState)
+		{
+		case State.Initializing:
+			currentState = State.Configuring;
+
+			touchInterface.EnablePlayOnComplete = true;
+			touchInterface.Z = 0f;
+
+			for (int i = 0; i < camelizationToggles.Length; i++)
+			{
+				TrackCamelType (camelizationToggles [i]);
+			}
+
+			for (int i = 0; i < orderToggles.Length; i++)
+			{
+				TrackLetterCase (orderToggles [i]);
+			}
+
+			startButton.Subscribe (delegate() {
+				sceneStrider.StartStriding(config);
+				UnityEngine.SceneManagement.SceneManager.LoadScene("Play");
+			});
+
+			break;
+		case State.Configuring:
+			break;
+		}
 	}
 
 	void TrackCamelType(Toggle toggle)
