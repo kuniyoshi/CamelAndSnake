@@ -23,4 +23,13 @@ public struct Configuration
 
 	public bool DidConfigure() { return times != 0; }
 
+	public override string ToString()
+	{
+		return "Configuration {"
+			+ "camel type: " + camelType + ", "
+			+ "letter case: " + order + ", "
+			+ "times: " + times
+			+ "}";
+	}
+
 }
