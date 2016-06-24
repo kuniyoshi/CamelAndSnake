@@ -198,15 +198,15 @@ public class GameController : MonoBehaviour
 			currentState = State.Preparing;
 
 			Vector3 point = SpecifyWorldPoint ();
-
-			clockPointer.transform.position = point;
-			clockPointer.Play ();
-
 			point.x = point.x + MagicTuneValue;
 
 			currentChar = GetNextChar ();
 			phrase.TextTo (GetNextPhrase (), point);
 			ScoreThePhraseExpectTime ();
+
+			point.y = point.y + MagicTuneValue;
+			clockPointer.transform.position = point;
+			clockPointer.Play ();
 		}
 	}
 
