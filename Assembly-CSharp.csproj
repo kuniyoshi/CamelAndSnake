@@ -75,10 +75,7 @@
      <Compile Include="Assets\Scripts\Test\Util.cs" />
      <Compile Include="Assets\Scripts\TestText\GameController.cs" />
      <Compile Include="Assets\Scripts\TheAnimatorId.cs" />
-     <Compile Include="Assets\Scripts\Title\DelegateChain.cs" />
      <Compile Include="Assets\Scripts\Title\GameController.cs" />
-     <Compile Include="Assets\Scripts\Title\OnSceneChange.cs" />
-     <Compile Include="Assets\Scripts\Title\TheScene.cs" />
      <Compile Include="Assets\Scripts\Title\TouchToStart.cs" />
      <Compile Include="Assets\Scripts\TouchCompleteArg.cs" />
      <Compile Include="Assets\Scripts\TouchInterface.cs" />
