@@ -3,10 +3,7 @@
 public class TouchInterface : MonoBehaviour
 {
 
-	public float touchShouldUpInDistance = 0.03f;
-	public ParticleSystem touchCircle;
-
-	float sqrTouchShouldUpInDistance;
+	public static float TouchShouldUpInDistance = 0.03f;
 
 	enum State
 	{
@@ -15,11 +12,13 @@ public class TouchInterface : MonoBehaviour
 		Touched,
 	}
 
+	public ParticleSystem touchCircle;
+
+	float sqrTouchShouldUpInDistance;
 	State currentState = State.Floating;
 	int currentId;
 	Vector3 startPosition;
 	Vector3 lastPosition;
-
 	OnTouchComplete onTouchComplete;
 
 	public void Subscribe(OnTouchComplete newDelegate)
@@ -27,11 +26,15 @@ public class TouchInterface : MonoBehaviour
 		onTouchComplete += newDelegate;
 	}
 
+	void Awake()
+	{
+		Debug.Assert (touchCircle);
+	}
+
 	void Start()
 	{
-		Debug.Assert (touchCircle != null);
 		touchCircle.Pause ();
-		sqrTouchShouldUpInDistance = touchShouldUpInDistance * touchShouldUpInDistance;
+		sqrTouchShouldUpInDistance = TouchShouldUpInDistance * TouchShouldUpInDistance;
 	}
 
 	void Update()
