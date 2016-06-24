@@ -29,12 +29,13 @@ public class TouchInterface : MonoBehaviour
 
 	public void PauseParticle()
 	{
-		touchCircle.Simulate (touchCircle.duration);
+		touchCircle.Simulate (0f);
 	}
 
 	public void PlayParticleAt(Vector3 position)
 	{
 		touchCircle.transform.position = position;
+		touchCircle.Emit (1);
 		touchCircle.Play ();
 	}
 
@@ -61,6 +62,7 @@ public class TouchInterface : MonoBehaviour
 	void Awake()
 	{
 		Debug.Assert (touchCircle);
+		EnablePlayOnComplete = true;
 	}
 
 	void Start()
