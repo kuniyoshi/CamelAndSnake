@@ -6,9 +6,6 @@ namespace Title
 public class GameController : MonoBehaviour
 {
 
-	public TouchToStart touchToStart;
-	public TouchInterface touchInterface;
-
 	enum LoadingState
 	{
 		Disabled,
@@ -16,6 +13,9 @@ public class GameController : MonoBehaviour
 		Loading,
 		Finished,
 	}
+
+	public TouchToStart touchToStart;
+	public TouchInterface touchInterface;
 
 	LoadingState loadingState = LoadingState.Disabled;
 
