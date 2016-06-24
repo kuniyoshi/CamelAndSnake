@@ -6,7 +6,7 @@ namespace Title
 public class GameController : MonoBehaviour
 {
 
-	enum LoadingState
+	enum State
 	{
 		Disabled,
 		Starting,
@@ -17,7 +17,7 @@ public class GameController : MonoBehaviour
 	public TouchToStart touchToStart;
 	public TouchInterface touchInterface;
 
-	LoadingState loadingState = LoadingState.Disabled;
+	State currentState = State.Disabled;
 
 	void Awake()
 	{
@@ -29,30 +29,27 @@ public class GameController : MonoBehaviour
 		Debug.Assert (touchToStart != null);
 		Debug.Assert (touchInterface != null);
 		touchInterface.Subscribe (delegate(object o, TouchCompleteArg arg) {
-			loadingState = LoadingState.Starting;
+			currentState = State.Starting;
 		});
 	}
 
 	void Update()
 	{
-		if (loadingState == LoadingState.Disabled)
-		{
-			return;
-		}
 
-		if (loadingState == LoadingState.Starting)
+		switch (currentState)
 		{
+		case State.Disabled:
+			break;
+		case State.Starting:
+			currentState = State.Loading;
 			touchToStart.InflateOnce ();
 			touchToStart.Subscribe (delegate() {
-				loadingState = LoadingState.Finished;
+				currentState = State.Finished;
 			});
-			loadingState = LoadingState.Loading;
-		}
-
-		if (loadingState == LoadingState.Finished)
-		{
-//			UnityEngine.SceneManagement.SceneManager.LoadScene ("Setting");
-			loadingState = LoadingState.Disabled;
+			break;
+		case State.Finished:
+			UnityEngine.SceneManagement.SceneManager.LoadScene ("Setting");
+			break;
 		}
 
 	}
