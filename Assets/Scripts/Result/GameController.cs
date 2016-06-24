@@ -48,8 +48,10 @@ public class GameController : MonoBehaviour
 		switch (currentState)
 		{
 		case State.Initial:
-			AlmostStart ();
 			currentState = State.DigitScrolling;
+			whoWon.Who = record.CamelScore > record.SnakeScore ? "CAMEL" : "SNAKE";
+			camelScore.SetScore (record.CamelScore);
+			snakeScore.SetScore (record.SnakeScore);
 			camelScore.StartScrolling ();
 			snakeScore.StartScrolling ();
 			break;
@@ -79,8 +81,7 @@ public class GameController : MonoBehaviour
 			}
 			break;
 		case State.Completed:
-			// TODO
-//			Debug.Log ("change the scene to the title");
+			UnityEngine.SceneManagement.SceneManager.LoadScene ("Title");
 			break;
 		}
 	}
@@ -88,12 +89,6 @@ public class GameController : MonoBehaviour
 	void OnDestroy()
 	{
 		TheAnimatorId.Destroy ();
-	}
-
-	void AlmostStart()
-	{
-		camelScore.SetScore (record.CamelScore);
-		snakeScore.SetScore (record.SnakeScore);
 	}
 
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Result
 {
@@ -19,9 +20,12 @@ public class WhoWon : MonoBehaviour
 	public float LightingDuration = 3f;
 	public SearchLight searchLight;
 	public Animator whoWonAnimator;
+	public Text whoText;
 
 	State currentState;
 	float time;
+
+	public string Who { set { whoText.text = value; } }
 
 	public bool DidComplete()
 	{
@@ -38,11 +42,12 @@ public class WhoWon : MonoBehaviour
 	{
 		Debug.Assert (searchLight);
 		Debug.Assert (whoWonAnimator);
+		Debug.Assert (whoText);
 	}
 
 	void Start()
 	{
-		Test.Util.HasAnimatorParameter (whoWonAnimator, TheAnimatorId.Instance ().Show);
+		Test.Util.HasAnimatorParameter (whoWonAnimator, TheAnimatorId.Instance (true).Show);
 		Debug.Assert (whoWonAnimator.HasState (0, TheAnimatorId.Instance ().Complete));
 
 		currentState = State.Hiding;
