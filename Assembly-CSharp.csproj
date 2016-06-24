@@ -52,7 +52,7 @@
      <Compile Include="Assets\Scripts\Configuration.cs" />
      <Compile Include="Assets\Scripts\Devel\FrameMs.cs" />
      <Compile Include="Assets\Scripts\OnTinyEvent.cs" />
-     <Compile Include="Assets\Scripts\OnTouchComplete.cs" />
+     <Compile Include="Assets\Scripts\OnTouchEvent.cs" />
      <Compile Include="Assets\Scripts\OnValueChange.cs" />
      <Compile Include="Assets\Scripts\Play\Complete.cs" />
      <Compile Include="Assets\Scripts\Play\Fraction.cs" />

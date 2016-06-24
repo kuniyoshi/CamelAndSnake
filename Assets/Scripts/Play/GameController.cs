@@ -29,7 +29,7 @@ public class GameController : MonoBehaviour
 	static float MagicTuneValue = 7.5f;
 
 	public SceneStrider configHolder;
-	public ParticleSystem clockPointer;
+	public TouchInterface touchInterface;
 	public Word phrase;
 	public Word recognitionTime;
 	public Progress progress;
@@ -48,7 +48,7 @@ public class GameController : MonoBehaviour
 		Random.seed = (int)(Time.realtimeSinceStartup * 1000f);
 
 		Debug.Assert (configHolder);
-		Debug.Assert (clockPointer);
+		Debug.Assert (touchInterface);
 		Debug.Assert (phrase);
 		Debug.Assert (recognitionTime);
 		Debug.Assert (progress);
@@ -58,7 +58,6 @@ public class GameController : MonoBehaviour
 	void Start()
 	{
 		currentState = State.Setting;
-		clockPointer.Simulate (clockPointer.duration);
 		vocabulary = new Vocabulary ();
 		currentChar = CharType.Undefined;
 		record = new Record ();
@@ -175,6 +174,38 @@ public class GameController : MonoBehaviour
 		}
 	}
 
+	void OnTouchBegin(object o, TouchCompleteArg arg)
+	{
+		currentState = State.Preparing;
+
+		TouchInterface t = (TouchInterface)o;
+		Vector3 pos = arg.Position;
+		pos.x = pos.x + MagicTuneValue;
+
+		currentChar = GetNextChar ();
+		phrase.TextTo (GetNextPhrase (), pos);
+		ScoreThePhraseExpectTime ();
+
+		pos.y = pos.y + MagicTuneValue;
+		t.PlayParticleAt(pos);
+	}
+
+	void OnTouchComplete(object o, TouchCompleteArg arg)
+	{
+		currentState = State.Scoring;
+
+		TouchInterface t = (TouchInterface)o;
+
+		score = Time.time - score;
+		Vector3 point = phrase.transform.position;
+		point.z = phrase.Z;
+		recognitionTime.TextTo (score.ToString (), point);
+
+		IncrementProgress ();
+
+		t.PauseParticle();
+	}
+
 	void UpdateSetting()
 	{
 		currentState = State.Floating;
@@ -189,25 +220,15 @@ public class GameController : MonoBehaviour
 		progress.InitCount (config.times);
 
 		currentChar = GetNextChar ();
+
+		touchInterface.EnablePlayOnComplete = false;
+		touchInterface.Z = phrase.Z;
+		touchInterface.SubscribeTouchBegin (OnTouchBegin);
+		touchInterface.Subscribe (OnTouchComplete);
 	}
 
 	void UpdateFloating()
 	{
-		if (Input.GetButtonDown("Fire1"))
-		{
-			currentState = State.Preparing;
-
-			Vector3 point = SpecifyWorldPoint ();
-			point.x = point.x + MagicTuneValue;
-
-			currentChar = GetNextChar ();
-			phrase.TextTo (GetNextPhrase (), point);
-			ScoreThePhraseExpectTime ();
-
-			point.y = point.y + MagicTuneValue;
-			clockPointer.transform.position = point;
-			clockPointer.Play ();
-		}
 	}
 
 	void UpdatePreparing()
@@ -219,19 +240,6 @@ public class GameController : MonoBehaviour
 
 	void UpdateRecognizing()
 	{
-		if (Input.GetButtonDown("Fire2"))
-		{
-			currentState = State.Scoring;
-			score = Time.time - score;
-			Vector3 point = phrase.transform.position;
-			point.z = phrase.Z;
-			recognitionTime.TextTo (score.ToString (), point);
-
-			IncrementProgress ();
-
-			clockPointer.Pause ();
-			clockPointer.Simulate (clockPointer.duration);
-		}
 	}
 
 	void UpdateScoring()
@@ -247,6 +255,9 @@ public class GameController : MonoBehaviour
 	{
 		currentState = State.Notifying;
 		complete.Animate ();
+
+		touchInterface.UnsubscribeTouchBegin (OnTouchBegin);
+		touchInterface.Unsubscribe (OnTouchComplete);
 	}
 
 	void UpdateNotifying()
@@ -296,14 +307,6 @@ public class GameController : MonoBehaviour
 		config.camelType = Configuration.CamelType.Mix;
 		config.order = Configuration.LetterCase.Shuffle;
 		config.times = 1;
-	}
-
-	Vector3 SpecifyWorldPoint()
-	{
-		Vector3 mousePosition = Input.mousePosition;
-		mousePosition.z = phrase.Z - Camera.main.transform.position.z;
-		Vector3 worldPosition = Camera.main.ScreenToWorldPoint (mousePosition);
-		return worldPosition;
 	}
 
 }

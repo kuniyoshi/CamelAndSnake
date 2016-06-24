@@ -8,6 +8,7 @@ public class TouchInterface : MonoBehaviour
 	enum State
 	{
 		Floating,
+		TouchingBegin,
 		Touching,
 		Touched,
 	}
@@ -17,13 +18,44 @@ public class TouchInterface : MonoBehaviour
 	float sqrTouchShouldUpInDistance;
 	State currentState = State.Floating;
 	int currentId;
-	Vector3 startPosition;
-	Vector3 lastPosition;
-	OnTouchComplete onTouchComplete;
+	Vector3 firstPoint;
+	Vector3 lastPoint;
+	OnTouchEvent onTouchBegin;
+	OnTouchEvent onTouchComplete;
 
-	public void Subscribe(OnTouchComplete newDelegate)
+	public bool EnablePlayOnComplete { get; set; }
+
+	public float Z { get; set; }
+
+	public void PauseParticle()
+	{
+		touchCircle.Simulate (touchCircle.duration);
+	}
+
+	public void PlayParticleAt(Vector3 position)
+	{
+		touchCircle.transform.position = position;
+		touchCircle.Play ();
+	}
+
+	public void Subscribe(OnTouchEvent newDelegate)
 	{
 		onTouchComplete += newDelegate;
+	}
+
+	public void SubscribeTouchBegin(OnTouchEvent newDelegate)
+	{
+		onTouchBegin += newDelegate;
+	}
+
+	public void Unsubscribe(OnTouchEvent leaveEvent)
+	{
+		onTouchComplete -= leaveEvent;
+	}
+
+	public void UnsubscribeTouchBegin(OnTouchEvent leaveEvent)
+	{
+		onTouchBegin -= leaveEvent;
 	}
 
 	void Awake()
@@ -33,7 +65,7 @@ public class TouchInterface : MonoBehaviour
 
 	void Start()
 	{
-		touchCircle.Pause ();
+		PauseParticle ();
 		sqrTouchShouldUpInDistance = TouchShouldUpInDistance * TouchShouldUpInDistance;
 	}
 
@@ -44,6 +76,9 @@ public class TouchInterface : MonoBehaviour
 		case State.Floating:
 			DoFloating ();
 			break;
+		case State.TouchingBegin:
+			DoTouchingBegin ();
+			break;
 		case State.Touching:
 			DoTouching ();
 			break;
@@ -52,12 +87,12 @@ public class TouchInterface : MonoBehaviour
 		if (currentState == State.Touched)
 		{
 			currentState = State.Floating;
-			Vector3 worldPosition = lastPosition;
-			worldPosition.z = -Camera.main.transform.position.z;
-			worldPosition = Camera.main.ScreenToWorldPoint (worldPosition);
-			touchCircle.transform.position = worldPosition;
-			touchCircle.time = 0f;
-			touchCircle.Play ();
+			Vector3 worldPosition = GetLastWorldPosition ();
+
+			if (EnablePlayOnComplete)
+			{
+				PlayParticleAt (worldPosition);
+			}
 
 			if (onTouchComplete != null)
 			{
@@ -76,11 +111,23 @@ public class TouchInterface : MonoBehaviour
 			return;
 		}
 
-		Touch touch = Input.touches [0];
-		startPosition = touch.position;
-		currentId = touch.fingerId;
+		currentState = State.TouchingBegin;
 
+		Touch touch = Input.touches [0];
+		firstPoint = touch.position;
+		currentId = touch.fingerId;
+	}
+
+	void DoTouchingBegin()
+	{
+		Debug.Assert (currentState == State.TouchingBegin);
 		currentState = State.Touching;
+
+		if (onTouchBegin != null)
+		{
+			TouchCompleteArg arg = new TouchCompleteArg (GetFirstWorldPosition (), Time.realtimeSinceStartup);
+			onTouchBegin (this, arg);
+		}
 	}
 
 	void DoTouching()
@@ -98,7 +145,7 @@ public class TouchInterface : MonoBehaviour
 				if (touches[i].fingerId == currentId)
 				{
 					didFind = true;
-					lastPosition = touches [i].position;
+					lastPoint = touches [i].position;
 					break;
 				}
 			}
@@ -111,7 +158,7 @@ public class TouchInterface : MonoBehaviour
 			return;
 		}
 
-		Vector3 deltaPosition = Camera.main.ScreenToViewportPoint (lastPosition - startPosition);
+		Vector3 deltaPosition = Camera.main.ScreenToViewportPoint (lastPoint - firstPoint);
 
 		if (deltaPosition.sqrMagnitude < sqrTouchShouldUpInDistance)
 		{
@@ -121,6 +168,23 @@ public class TouchInterface : MonoBehaviour
 		{
 			currentState = State.Floating;
 		}
+	}
+
+	Vector3 GetFirstWorldPosition()
+	{
+		return GetWorldPoint (firstPoint);
+	}
+
+	Vector3 GetLastWorldPosition()
+	{
+		return GetWorldPoint (lastPoint);
+	}
+
+	Vector3 GetWorldPoint(Vector3 point)
+	{
+		point.z = Z - Camera.main.transform.position.z;
+		point = Camera.main.ScreenToWorldPoint (point);
+		return point;
 	}
 
 }
