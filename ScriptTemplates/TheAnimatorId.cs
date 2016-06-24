@@ -7,10 +7,12 @@ using UnityEngine;
 	"DidFix",
 	"Hide",
 	"Normal",
+	"OnSceneChange",
 	"Show",
 	"ShrinikDown",
 	"ShrinikUp",
 	"StartScrolling",
+	"TheLastState",
 ] -%]
 
 public class TheAnimatorId

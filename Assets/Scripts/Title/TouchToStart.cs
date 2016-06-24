@@ -10,12 +10,9 @@ public class TouchToStart : MonoBehaviour
 	Animator animator;
 	OnTinyEvent onTinyEvent;
 
-	int TriggerId = Animator.StringToHash ("OnSceneChange");
-	int TheLastState = Animator.StringToHash("TheLastState");
-
 	public void InflateOnce()
 	{
-		animator.SetTrigger (TriggerId);
+		animator.SetTrigger (TheAnimatorId.Instance ().OnSceneChange);
 	}
 
 	public void Subscribe(OnTinyEvent newOne)
@@ -23,22 +20,21 @@ public class TouchToStart : MonoBehaviour
 		onTinyEvent += newOne;
 	}
 
-//	public void Unsubscribe(OnTinyEvent alreadyOne)
-//	{
-//		onTinyEvent -= alreadyOne;
-//	}
-
 	void Start()
 	{
 		animator = GetComponentInParent<Animator> ();
-		Debug.Assert(animator != null && Test.Util.HasAnimatorParameter (animator, TriggerId));
-		Debug.Assert (animator != null && animator.HasState (0, TheLastState));
+		Debug.Assert (animator);
+		Debug.Assert (Test.Util.HasAnimatorParameter (animator, TheAnimatorId.Instance (true).OnSceneChange));
+		Debug.Assert (animator.HasState (0, TheAnimatorId.Instance ().TheLastState));
 	}
 
 	void Update()
 	{
-		if (animator.GetCurrentAnimatorStateInfo(0).shortNameHash == TheLastState)
+		AnimatorStateInfo info = animator.GetCurrentAnimatorStateInfo (0);
+
+		if (info.shortNameHash == TheAnimatorId.Instance ().TheLastState)
 		{
+
 			if (onTinyEvent != null)
 			{
 				onTinyEvent ();

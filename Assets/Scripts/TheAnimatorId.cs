@@ -47,10 +47,12 @@ public class TheAnimatorId
 	public int DidFix { get { return impl.DidFix; } }
 	public int Hide { get { return impl.Hide; } }
 	public int Normal { get { return impl.Normal; } }
+	public int OnSceneChange { get { return impl.OnSceneChange; } }
 	public int Show { get { return impl.Show; } }
 	public int ShrinikDown { get { return impl.ShrinikDown; } }
 	public int ShrinikUp { get { return impl.ShrinikUp; } }
 	public int StartScrolling { get { return impl.StartScrolling; } }
+	public int TheLastState { get { return impl.TheLastState; } }
 
 	partial class Impl
 	{
@@ -59,10 +61,12 @@ public class TheAnimatorId
 		public int DidFix;
 		public int Hide;
 		public int Normal;
+		public int OnSceneChange;
 		public int Show;
 		public int ShrinikDown;
 		public int ShrinikUp;
 		public int StartScrolling;
+		public int TheLastState;
 
 		public Impl()
 		{
@@ -70,10 +74,12 @@ public class TheAnimatorId
 			DidFix = Animator.StringToHash("DidFix");
 			Hide = Animator.StringToHash("Hide");
 			Normal = Animator.StringToHash("Normal");
+			OnSceneChange = Animator.StringToHash("OnSceneChange");
 			Show = Animator.StringToHash("Show");
 			ShrinikDown = Animator.StringToHash("ShrinikDown");
 			ShrinikUp = Animator.StringToHash("ShrinikUp");
 			StartScrolling = Animator.StringToHash("StartScrolling");
+			TheLastState = Animator.StringToHash("TheLastState");
 		}
 
 	}

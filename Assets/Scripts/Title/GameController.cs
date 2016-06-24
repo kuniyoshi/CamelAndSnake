@@ -21,7 +21,8 @@ public class GameController : MonoBehaviour
 
 	void Awake()
 	{
-		TheScene.Create ();
+		TheAnimatorId.Create();
+//		TheScene.Create ();
 	}
 
 	void Start()
