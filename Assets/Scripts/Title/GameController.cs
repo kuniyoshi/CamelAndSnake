@@ -52,7 +52,7 @@ public class GameController : MonoBehaviour
 			}
 			break;
 		case State.Finished:
-			UnityEngine.SceneManagement.SceneManager.LoadScene ("Setting");
+			UnityEngine.SceneManagement.SceneManager.LoadScene ("Settings");
 			break;
 		}
 
