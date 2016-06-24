@@ -38,6 +38,7 @@ public class Complete : MonoBehaviour
 		sibling = Instantiate (completeText);
 		sibling.name = "sibling";
 		sibling.transform.SetParent (transform);
+		sibling.transform.position = completeText.transform.position;
 
 		surfaceAnimator = completeText.GetComponent<Animator> ();
 		Debug.Assert (surfaceAnimator);

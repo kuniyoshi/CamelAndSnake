@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Text;
+using System.Threading;
 using UnityEngine;
 
 public class Vocabulary
@@ -12,8 +13,26 @@ public class Vocabulary
 
 	public Vocabulary()
 	{
-		string filename = Application.dataPath + @"/data/phrases.txt";
-		phrases = File.ReadAllLines (filename);
+		string filename = System.IO.Path.Combine (Application.streamingAssetsPath, @"phrases.txt");
+		string text = "";
+
+		if (filename.Contains("://"))
+		{
+			WWW www = new WWW (filename);
+
+			while (!www.isDone)
+			{
+				Thread.Sleep (30);
+			}
+
+			text = www.text;
+		}
+		else
+		{
+			text = File.ReadAllText (filename);
+		}
+
+		phrases = text.Split ('\n');
 	}
 
 	public int CountOfCurrentLetters { get { return countOfLetters; } }
