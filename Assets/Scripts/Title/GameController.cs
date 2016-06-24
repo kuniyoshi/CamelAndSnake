@@ -44,9 +44,12 @@ public class GameController : MonoBehaviour
 		case State.Starting:
 			currentState = State.Loading;
 			touchToStart.InflateOnce ();
-			touchToStart.Subscribe (delegate() {
+			break;
+		case State.Loading:
+			if (touchToStart.DidComplete())
+			{
 				currentState = State.Finished;
-			});
+			}
 			break;
 		case State.Finished:
 			UnityEngine.SceneManagement.SceneManager.LoadScene ("Setting");
