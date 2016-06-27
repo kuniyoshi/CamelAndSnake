@@ -76,9 +76,6 @@
      <Compile Include="Assets\Scripts\TouchCompleteArg.cs" />
      <Compile Include="Assets\Scripts\TouchInterface.cs" />
      <Compile Include="Assets\Scripts\Vocabulary.cs" />
-     <Compile Include="Assets\TestScripts\MyPub.cs" />
-     <Compile Include="Assets\TestScripts\MySub.cs" />
-     <Compile Include="Assets\TestScripts\OnFinish.cs" />
      <None Include="Assets\StreamingAssets\phrases.txt" />
      <None Include="Assets\README_SD_UnityChan.txt" />
  <Reference Include="UnityEngine.Networking">
